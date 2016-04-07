@@ -1,0 +1,2034 @@
+[{
+    "year": 1977,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+    "firms": 35943
+}, {
+    "year": 1977,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19363
+}, {
+    "year": 1977,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 383356
+}, {
+    "year": 1977,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 259982
+}, {
+    "year": 1977,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 121028
+}, {
+    "year": 1977,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 275199
+}, {
+    "year": 1977,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 939839
+}, {
+    "year": 1977,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 297794
+}, {
+    "year": 1977,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1118339
+}, {
+    "year": 1978,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+    "firms": 37025
+}, {
+    "year": 1978,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19539
+}, {
+    "year": 1978,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 410053
+}, {
+    "year": 1978,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 262296
+}, {
+    "year": 1978,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 123278
+}, {
+    "year": 1978,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 278461
+}, {
+    "year": 1978,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 922922
+}, {
+    "year": 1978,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 303085
+}, {
+    "year": 1978,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1146106
+}, {
+    "year": 1979,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 39339
+}, {
+    "year": 1979,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 21004
+}, {
+    "year": 1979,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 434069
+}, {
+    "year": 1979,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 269008
+}, {
+    "year": 1979,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 129399
+}, {
+    "year": 1979,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 288897
+}, {
+    "year": 1979,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 938012
+}, {
+    "year": 1979,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 313057
+}, {
+    "year": 1979,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1197461
+}, {
+    "year": 1980,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 40003
+}, {
+    "year": 1980,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 21622
+}, {
+    "year": 1980,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 421340
+}, {
+    "year": 1980,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 270322
+}, {
+    "year": 1980,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 130156
+}, {
+    "year": 1980,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 292219
+}, {
+    "year": 1980,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 924250
+}, {
+    "year": 1980,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 313402
+}, {
+    "year": 1980,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1224501
+}, {
+    "year": 1981,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 40469
+}, {
+    "year": 1981,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 24378
+}, {
+    "year": 1981,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 395701
+}, {
+    "year": 1981,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 268492
+}, {
+    "year": 1981,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 126637
+}, {
+    "year": 1981,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 295594
+}, {
+    "year": 1981,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 902085
+}, {
+    "year": 1981,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 306776
+}, {
+    "year": 1981,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1234892
+}, {
+    "year": 1982,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 42040
+}, {
+    "year": 1982,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 27275
+}, {
+    "year": 1982,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 375328
+}, {
+    "year": 1982,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 271757
+}, {
+    "year": 1982,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 130157
+}, {
+    "year": 1982,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 305524
+}, {
+    "year": 1982,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 905569
+}, {
+    "year": 1982,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 299225
+}, {
+    "year": 1982,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1282192
+}, {
+    "year": 1983,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 44313
+}, {
+    "year": 1983,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 26430
+}, {
+    "year": 1983,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 375360
+}, {
+    "year": 1983,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 271511
+}, {
+    "year": 1983,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 131962
+}, {
+    "year": 1983,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 308374
+}, {
+    "year": 1983,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 914843
+}, {
+    "year": 1983,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 308676
+}, {
+    "year": 1983,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1341461
+}, {
+    "year": 1984,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 47599
+}, {
+    "year": 1984,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 26095
+}, {
+    "year": 1984,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 403403
+}, {
+    "year": 1984,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 278370
+}, {
+    "year": 1984,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 136703
+}, {
+    "year": 1984,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 316124
+}, {
+    "year": 1984,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 923199
+}, {
+    "year": 1984,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 319622
+}, {
+    "year": 1984,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1419443
+}, {
+    "year": 1985,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 51402
+}, {
+    "year": 1985,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 26457
+}, {
+    "year": 1985,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 429872
+}, {
+    "year": 1985,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 286089
+}, {
+    "year": 1985,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 144784
+}, {
+    "year": 1985,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 322979
+}, {
+    "year": 1985,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 928309
+}, {
+    "year": 1985,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 331329
+}, {
+    "year": 1985,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1488711
+}, {
+    "year": 1986,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 54814
+}, {
+    "year": 1986,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 25449
+}, {
+    "year": 1986,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 449025
+}, {
+    "year": 1986,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 287535
+}, {
+    "year": 1986,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 148696
+}, {
+    "year": 1986,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 330698
+}, {
+    "year": 1986,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 939062
+}, {
+    "year": 1986,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 338659
+}, {
+    "year": 1986,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1545318
+}, {
+    "year": 1987,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 58977
+}, {
+    "year": 1987,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 22752
+}, {
+    "year": 1987,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 472091
+}, {
+    "year": 1987,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 289359
+}, {
+    "year": 1987,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 153002
+}, {
+    "year": 1987,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 333839
+}, {
+    "year": 1987,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 946367
+}, {
+    "year": 1987,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 346813
+}, {
+    "year": 1987,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1593390
+}, {
+    "year": 1988,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 61508
+}, {
+    "year": 1988,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 22225
+}, {
+    "year": 1988,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 479108
+}, {
+    "year": 1988,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 293390
+}, {
+    "year": 1988,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 151340
+}, {
+    "year": 1988,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 336845
+}, {
+    "year": 1988,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 940670
+}, {
+    "year": 1988,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 346703
+}, {
+    "year": 1988,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1602634
+}, {
+    "year": 1989,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 64119
+}, {
+    "year": 1989,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 21410
+}, {
+    "year": 1989,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 482578
+}, {
+    "year": 1989,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 293264
+}, {
+    "year": 1989,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 152615
+}, {
+    "year": 1989,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 338969
+}, {
+    "year": 1989,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 931411
+}, {
+    "year": 1989,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 347153
+}, {
+    "year": 1989,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1616918
+}, {
+    "year": 1990,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 70077
+}, {
+    "year": 1990,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 21365
+}, {
+    "year": 1990,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 497665
+}, {
+    "year": 1990,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 298052
+}, {
+    "year": 1990,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 157110
+}, {
+    "year": 1990,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 346584
+}, {
+    "year": 1990,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 938621
+}, {
+    "year": 1990,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 354159
+}, {
+    "year": 1990,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1666806
+}, {
+    "year": 1991,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 73341
+}, {
+    "year": 1991,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 21529
+}, {
+    "year": 1991,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 492089
+}, {
+    "year": 1991,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 298240
+}, {
+    "year": 1991,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 159375
+}, {
+    "year": 1991,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 352141
+}, {
+    "year": 1991,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 942965
+}, {
+    "year": 1991,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 353721
+}, {
+    "year": 1991,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1711364
+}, {
+    "year": 1992,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 75456
+}, {
+    "year": 1992,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 20615
+}, {
+    "year": 1992,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 487508
+}, {
+    "year": 1992,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 294989
+}, {
+    "year": 1992,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 160982
+}, {
+    "year": 1992,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 352895
+}, {
+    "year": 1992,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 936165
+}, {
+    "year": 1992,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 355484
+}, {
+    "year": 1992,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1736444
+}, {
+    "year": 1993,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 77099
+}, {
+    "year": 1993,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19992
+}, {
+    "year": 1993,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 496565
+}, {
+    "year": 1993,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 297235
+}, {
+    "year": 1993,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 166406
+}, {
+    "year": 1993,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 356504
+}, {
+    "year": 1993,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 942163
+}, {
+    "year": 1993,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 362430
+}, {
+    "year": 1993,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1771852
+}, {
+    "year": 1994,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 79844
+}, {
+    "year": 1994,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19534
+}, {
+    "year": 1994,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 511513
+}, {
+    "year": 1994,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 298727
+}, {
+    "year": 1994,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 172394
+}, {
+    "year": 1994,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 359827
+}, {
+    "year": 1994,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 943634
+}, {
+    "year": 1994,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 372715
+}, {
+    "year": 1994,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1805409
+}, {
+    "year": 1995,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 83664
+}, {
+    "year": 1995,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 18974
+}, {
+    "year": 1995,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 531303
+}, {
+    "year": 1995,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 301279
+}, {
+    "year": 1995,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 179741
+}, {
+    "year": 1995,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 366159
+}, {
+    "year": 1995,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 948826
+}, {
+    "year": 1995,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 376509
+}, {
+    "year": 1995,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1845128
+}, {
+    "year": 1996,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 86162
+}, {
+    "year": 1996,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 18409
+}, {
+    "year": 1996,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 541268
+}, {
+    "year": 1996,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 302306
+}, {
+    "year": 1996,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 184682
+}, {
+    "year": 1996,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 370714
+}, {
+    "year": 1996,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 954200
+}, {
+    "year": 1996,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 384030
+}, {
+    "year": 1996,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1884790
+}, {
+    "year": 1997,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 89048
+}, {
+    "year": 1997,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 18216
+}, {
+    "year": 1997,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 554855
+}, {
+    "year": 1997,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 302126
+}, {
+    "year": 1997,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 187297
+}, {
+    "year": 1997,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 371316
+}, {
+    "year": 1997,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 952133
+}, {
+    "year": 1997,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 391948
+}, {
+    "year": 1997,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1920216
+}, {
+    "year": 1998,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 90968
+}, {
+    "year": 1998,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 17835
+}, {
+    "year": 1998,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 561640
+}, {
+    "year": 1998,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 300827
+}, {
+    "year": 1998,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 188873
+}, {
+    "year": 1998,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 366751
+}, {
+    "year": 1998,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 945270
+}, {
+    "year": 1998,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 397741
+}, {
+    "year": 1998,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1948995
+}, {
+    "year": 1999,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 93387
+}, {
+    "year": 1999,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 16801
+}, {
+    "year": 1999,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 572375
+}, {
+    "year": 1999,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 296160
+}, {
+    "year": 1999,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 190926
+}, {
+    "year": 1999,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 360510
+}, {
+    "year": 1999,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 937378
+}, {
+    "year": 1999,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 404574
+}, {
+    "year": 1999,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1966938
+}, {
+    "year": 2000,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 95897
+}, {
+    "year": 2000,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 16591
+}, {
+    "year": 2000,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 576445
+}, {
+    "year": 2000,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 291743
+}, {
+    "year": 2000,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 190330
+}, {
+    "year": 2000,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 354640
+}, {
+    "year": 2000,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 933623
+}, {
+    "year": 2000,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 407354
+}, {
+    "year": 2000,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1978488
+}, {
+    "year": 2001,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 101532
+}, {
+    "year": 2001,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 16917
+}, {
+    "year": 2001,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 574955
+}, {
+    "year": 2001,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 287647
+}, {
+    "year": 2001,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 189949
+}, {
+    "year": 2001,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 348191
+}, {
+    "year": 2001,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 931518
+}, {
+    "year": 2001,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 413290
+}, {
+    "year": 2001,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 1999305
+}, {
+    "year": 2002,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 103809
+}, {
+    "year": 2002,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 17233
+}, {
+    "year": 2002,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 571559
+}, {
+    "year": 2002,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 283236
+}, {
+    "year": 2002,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 190749
+}, {
+    "year": 2002,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 349897
+}, {
+    "year": 2002,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 949136
+}, {
+    "year": 2002,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 429586
+}, {
+    "year": 2002,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2053677
+}, {
+    "year": 2003,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 104587
+}, {
+    "year": 2003,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 16758
+}, {
+    "year": 2003,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 555862
+}, {
+    "year": 2003,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 277133
+}, {
+    "year": 2003,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 188912
+}, {
+    "year": 2003,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 346987
+}, {
+    "year": 2003,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 956003
+}, {
+    "year": 2003,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 441400
+}, {
+    "year": 2003,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2101246
+}, {
+    "year": 2004,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 107732
+}, {
+    "year": 2004,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 17030
+}, {
+    "year": 2004,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 544548
+}, {
+    "year": 2004,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 273215
+}, {
+    "year": 2004,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 189187
+}, {
+    "year": 2004,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 345426
+}, {
+    "year": 2004,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 965416
+}, {
+    "year": 2004,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 455518
+}, {
+    "year": 2004,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2164821
+}, {
+    "year": 2005,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 111226
+}, {
+    "year": 2005,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 17602
+}, {
+    "year": 2005,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 530833
+}, {
+    "year": 2005,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 271626
+}, {
+    "year": 2005,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 192110
+}, {
+    "year": 2005,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 344941
+}, {
+    "year": 2005,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 979289
+}, {
+    "year": 2005,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 472964
+}, {
+    "year": 2005,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2243263
+}, {
+    "year": 2006,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 115222
+}, {
+    "year": 2006,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 18492
+}, {
+    "year": 2006,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 524590
+}, {
+    "year": 2006,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 269277
+}, {
+    "year": 2006,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 194025
+}, {
+    "year": 2006,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 343114
+}, {
+    "year": 2006,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 971882
+}, {
+    "year": 2006,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 484429
+}, {
+    "year": 2006,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2287750
+}, {
+    "year": 2007,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 118517
+}, {
+    "year": 2007,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19488
+}, {
+    "year": 2007,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 513098
+}, {
+    "year": 2007,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 267650
+}, {
+    "year": 2007,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 196560
+}, {
+    "year": 2007,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 341678
+}, {
+    "year": 2007,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 979200
+}, {
+    "year": 2007,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 489374
+}, {
+    "year": 2007,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2343777
+}, {
+    "year": 2008,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 119983
+}, {
+    "year": 2008,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19948
+}, {
+    "year": 2008,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 486628
+}, {
+    "year": 2008,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 262274
+}, {
+    "year": 2008,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 193917
+}, {
+    "year": 2008,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 336590
+}, {
+    "year": 2008,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 972707
+}, {
+    "year": 2008,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 471431
+}, {
+    "year": 2008,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2358624
+}, {
+    "year": 2009,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 117290
+}, {
+    "year": 2009,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 20009
+}, {
+    "year": 2009,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 435320
+}, {
+    "year": 2009,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 250707
+}, {
+    "year": 2009,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 185542
+}, {
+    "year": 2009,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 324101
+}, {
+    "year": 2009,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 948485
+}, {
+    "year": 2009,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 445336
+}, {
+    "year": 2009,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2320515
+}, {
+    "year": 2010,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 117303
+}, {
+    "year": 2010,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19478
+}, {
+    "year": 2010,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 402973
+}, {
+    "year": 2010,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 241097
+}, {
+    "year": 2010,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 181136
+}, {
+    "year": 2010,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 316683
+}, {
+    "year": 2010,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 943715
+}, {
+    "year": 2010,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 438982
+}, {
+    "year": 2010,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2309614
+}, {
+    "year": 2011,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 117033
+}, {
+    "year": 2011,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 19798
+}, {
+    "year": 2011,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 380922
+}, {
+    "year": 2011,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 236308
+}, {
+    "year": 2011,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 182588
+}, {
+    "year": 2011,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 312035
+}, {
+    "year": 2011,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 938523
+}, {
+    "year": 2011,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 431812
+}, {
+    "year": 2011,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2311116
+}, {
+    "year": 2012,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 122190
+}, {
+    "year": 2012,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 20637
+}, {
+    "year": 2012,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 378042
+}, {
+    "year": 2012,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 234417
+}, {
+    "year": 2012,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 186745
+}, {
+    "year": 2012,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 311346
+}, {
+    "year": 2012,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 952283
+}, {
+    "year": 2012,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 436331
+}, {
+    "year": 2012,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2354803
+}, {
+    "year": 2013,
+    "SIC": 7,
+    "activity": "2.2.2",
+    "resource": "E1ii",
+
+    "firms": 122159
+}, {
+    "year": 2013,
+    "SIC": 10,
+    "activity": "1.2.2, 2.2.2, 2.2.2",
+    "resource": "B1ii, E4, E1",
+    "firms": 20706
+}, {
+    "year": 2013,
+    "SIC": 15,
+    "activity": "2.2.2",
+    "resource": "A4",
+    "firms": 369601
+}, {
+    "year": 2013,
+    "SIC": 20,
+    "activity": "2.2.2, 2.2.2",
+    "resource": "B, E",
+    "firms": 230708
+}, {
+    "year": 2013,
+    "SIC": 40,
+    "activity": "1.2.2, 1.2.2, 1.2.2, 1.2.2, 1.2.2",
+    "resource": "F, B, E, C, Div",
+    "firms": 188149
+}, {
+    "year": 2013,
+    "SIC": 50,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 307626
+}, {
+    "year": 2013,
+    "SIC": 52,
+    "activity": "3.1.2, 3.1.2",
+    "resource": "B, E",
+    "firms": 942671
+}, {
+    "year": 2013,
+    "SIC": 60,
+    "activity": "3.1.2, 3.3.2, 3.3.2, 4.1.2, 3.3.2, 3.1.2",
+    "resource": "A, A, D3, D, D4, D2",
+    "firms": 443410
+}, {
+    "year": 2013,
+    "SIC": 70,
+    "activity": "1.3.2, 2.2.3, 2.3.2, 2.3.2, 1.3.2, 2.3.2, 2.1.2, 2.2.2, 1.3.2, 4.1.2",
+    "resource": "F, F, F, B, B, A4, F, F, A, F",
+    "firms": 2382627
+}]
