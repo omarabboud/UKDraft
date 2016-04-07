@@ -121,7 +121,6 @@ $(function() {
 
         svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(0," + 10 + ")")
             .call(yAxis)
             .append("text")
             .attr("class", "label")
