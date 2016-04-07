@@ -82,30 +82,30 @@ $(function() {
             if (d.activity.length > 1) {
                 var activities = d.activity.replace(/\s+/g, '').split(",");
                 var resources = d.resource.replace(/\s+/g, '').split(",");
-                maxFirmCount = Math.max(maxFirmCount, d.firms / activities.length);
+                if (d.year == 2013) {
+                    maxFirmCount = Math.max(maxFirmCount, d.firms / activities.length);
+                }
+
                 for (var i = 0; i < activities.length; i++) {
                     var entry = {
-                        "year": d.year,
-                        "SIC": d.SIC,
-                        "activity": activities[i],
-                        "resource": resources[i],
-                        "firms": d.firms / activities.length
-                    }
-                    data.splice(i, 1);
+                            "year": d.year,
+                            "SIC": d.SIC,
+                            "activity": activities[i],
+                            "resource": resources[i],
+                            "firms": d.firms / activities.length
+                        }
+                    d.firms = 0;      // "remove" the conjugated entry
                     data.push(entry);
                 }
             } else {
-                maxFirmCount = Math.max(maxFirmCount, d.firms);
+                if (d.year == 2013) {
+                    maxFirmCount = Math.max(maxFirmCount, d.firms);
+                }
+                
             }
         });
+        console.log(maxFirmCount);
         r.domain([0, maxFirmCount]);
-
-        // x.domain(d3.extent(data, function(d) {
-        //     return d.resource.charAt(0)
-        // }));
-        // y.domain(d3.extent(data, function(d) {
-        //     return d.sepalLength;
-        // })).nice();
 
         svg.append("g")
             .attr("class", "x axis")
@@ -130,11 +130,16 @@ $(function() {
             .style("text-anchor", "end")
             .text("Activity");
 
+        // console.log(data);
         svg.selectAll(".dot")
             .data(data)
             .enter().append("circle")
+            .filter(function(d) {
+                return (d.year == 2013);
+            })
             .attr("class", "dot")
             .attr("r", function(d) {
+                console.log(d.firms, r(d.firms));
                 return r(d.firms);
             })
             .attr("cx", function(d) {
@@ -146,13 +151,13 @@ $(function() {
             .style("fill", "transparent");
 
         svg.selectAll("text.label")
-           .style("font-size","16px")
-           .style("font-family", "avenir")
-           .style("font-weight", "bold");
+            .style("font-size", "16px")
+            .style("font-family", "avenir")
+            .style("font-weight", "bold");
 
         svg.selectAll(".tick > text")
-        .style("font-size", "12px")
-        .style("font-family", "avenir");
+            .style("font-size", "12px")
+            .style("font-family", "avenir");
 
     });
 })
