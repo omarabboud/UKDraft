@@ -148,6 +148,11 @@ $(function() {
         svg.selectAll("text.label")
            .style("font-size","16px")
            .style("font-family", "avenir")
+           .style("font-weight", "bold");
+
+        svg.selectAll(".tick > text")
+        .style("font-size", "12px")
+        .style("font-family", "avenir");
 
     });
 })
