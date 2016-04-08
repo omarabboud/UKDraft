@@ -38,6 +38,9 @@ $(function() {
 
     var data;
     d3.json("SIC.json", function(error, read_data) {
+
+        // cleanup read-in data to separate conjugated nodes
+        // assumes equal weighting
         read_data.forEach(function(d, i) {
             var activities = d.activity.replace(/\s+/g, '').split(",");
             var resources = d.resource.replace(/\s+/g, '').split(",");
@@ -54,7 +57,8 @@ $(function() {
                     read_data.push(entry);
                 }
                 // data[i].firms = 0; // "remove" the conjugated entry
-                read_data.splice(i, 1);
+                // read_data.splice(i, 1);
+                d.firms = 0;
             }
         });
         data = read_data;
