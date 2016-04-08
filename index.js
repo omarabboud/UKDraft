@@ -40,7 +40,6 @@ $(function() {
 
 
     var read_data, data;
-    // var processed_data;
     d3.json("SIC.json", function(error, json) {
         if (error) return error;
         read_data = json;
@@ -108,26 +107,34 @@ $(function() {
                 .style("font-size", "16px")
                 .text("Distribution of " + totalFirmCount + " firms");
         } else {
-          title.transition().text("Distribution of " + totalFirmCount + " firms");
+            title.transition().text("Distribution of " + totalFirmCount + " firms");
         }
-        
-        
+
+        svg.selectAll(".dot").remove();
+        var dots = svg.selectAll(".dot").data(chartData, function(d, i) {
+            return d.center;
+        });
+
+        // dots.attr("class", "update");
 
 
-        svg.selectAll(".dot")
-            .data(chartData)
-            .enter().append("circle")
-            .attr("class", "dot")
+        dots.enter().append("circle")
+            .attr("class", "enter dot")
+            .transition()
+            .duration(750)
             .attr("r", function(d) {
                 return r(d.firms);
             })
             .attr("cx", function(d) {
-                return x(d.resource.charAt(0));
+                return x(d.resource);
             })
             .attr("cy", function(d) {
-                return y(d.activity.substring(0, 3));
+                return y(d.activity);
             })
-            .style("fill", "transparent");
+            .attr("y", 0).style("fill", "transparent");
+
+        // dots.exit().attr("class", "exit").remove();
+
     }
 
     /**
@@ -149,13 +156,13 @@ $(function() {
             var resources = d.resource.replace(/\s+/g, '').split(",");
             for (var i = 0; i < activities.length; i++) {
                 var firmCount = d.firms / activities.length;
-
                 var entry = {
                     "year": d.year,
                     "SIC": d.SIC,
-                    "activity": activities[i],
-                    "resource": resources[i],
-                    "firms": firmCount
+                    "activity": activities[i].substring(0, 3),
+                    "resource": resources[i].charAt(0),
+                    "firms": firmCount,
+                    "center": activities[i].substring(0, 3) + resources[i].charAt(0)
                 }
                 data.push(entry);
             }
@@ -185,17 +192,18 @@ $(function() {
      * @param {Number} specifies inital value of slider
      */
     function setupSlider() {
+        var sliderValue = YEAR;
+        $(".slider.value").html(YEAR);
         $('#slider').range({
             min: 1977,
             max: 2013,
             start: YEAR,
             onChange: function(val) {
-                if (!updating) {
-                    updating = true;
-                    return;
+                if (val != YEAR) {
+                    YEAR = val;
+                    updateChart(YEAR);
+                    $(".slider.value").html(val);
                 }
-                // console.log(YEAR)
-                updateChart(val);
             }
         });
 
