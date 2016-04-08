@@ -5,16 +5,18 @@ $(function() {
     // calculate height to keep grid items square
     var height = width * 12 / 7;
 
-    // create axis scale functions
-    var x = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G"]).rangePoints([width / 7, width]);
-    var ydomain = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4.1", "4.2", "4.3"];
-    var y = d3.scale.ordinal().domain(ydomain)
-        .rangePoints([height / 12, height]);
+    var Scale = makeScales();
+    var x = Scale.x,
+        y = Scale.y,
+        r = Scale.r;
 
-    var r = d3.scale.linear().range([0, height / 12]);
+    var YEAR = 2010;
+    setupSlider(YEAR);
+    // var color = d3.scale.category10();
 
-    var color = d3.scale.category10();
-
+    /** 
+    create x & y axis
+    */
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("top")
@@ -35,51 +37,14 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var data;
-    d3.json("SIC.json", function(error, read_data) {
 
-        // cleanup read-in data to separate conjugated nodes
-        // assumes equal weighting
-        read_data.forEach(function(d, i) {
-            var activities = d.activity.replace(/\s+/g, '').split(",");
-            var resources = d.resource.replace(/\s+/g, '').split(",");
-            if (d.activity.length > 1) {
-                for (var i = 0; i < activities.length; i++) {
-                    var entry = {
-                            "year": d.year,
-                            "SIC": d.SIC,
-                            "activity": activities[i],
-                            "resource": resources[i],
-                            "firms": d.firms / activities.length
-                        }
-                        // console.log(data[i]); 
-                    read_data.push(entry);
-                }
-                // data[i].firms = 0; // "remove" the conjugated entry
-                // read_data.splice(i, 1);
-                d.firms = 0;
-            }
-        });
-        data = read_data;
-
-        var maxFirmCount = 0;
-        var totalFirmCount = 0;
-        data.forEach(function(d, i) {
-            if (d.year == 2013) {
-                maxFirmCount = Math.max(maxFirmCount, d.firms);
-                totalFirmCount += d.firms;
-            }
-        });
-        totalFirmCount = ~~(totalFirmCount)
-        console.log(totalFirmCount);
-        r.domain([0, maxFirmCount]);
-
-        svg.append("text")
-            .attr("x", (width / 2))
-            .attr("y", 0 - (margin.top / 2))
-            .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .text("Distribution of " + totalFirmCount + " firms");
+    var read_data, data;
+    // var processed_data;
+    d3.json("SIC.json", function(error, json) {
+        if (error) return error;
+        read_data = json;
+        // console.log(read_data);
+        data = processedData();
 
         svg.append("g")
             .attr("class", "x axis")
@@ -101,14 +66,50 @@ $(function() {
             .style("text-anchor", "end")
             .text("Activity");
 
+
+
+        svg.selectAll("text").style("font-family", "avenir");
+
+        svg.selectAll("text.label")
+            .style("font-size", "16px")
+            .style("font-weight", "bold");
+
+        svg.selectAll(".tick > text")
+            .style("font-size", "12px");
+
+        updateChart(YEAR);
+    });
+
+
+    function updateChart(YEAR) {
+
+        var chartData = data.filter(function(d) {
+            return d.year == YEAR
+        });
+
+        var maxFirmCount = 0,
+            totalFirmCount = 0;
+
+        chartData.forEach(function(d, i) {
+            console.log(d.firms);
+            maxFirmCount = Math.max(maxFirmCount, d.firms);
+            totalFirmCount += d.firms;
+        });
+
+        r.domain([0, maxFirmCount]);
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("Distribution of " + totalFirmCount + " firms");
+
         svg.selectAll(".dot")
-            .data(data.filter(function(d) {
-                return (d.year == 2013);
-            }))
+            .data(chartData)
             .enter().append("circle")
             .attr("class", "dot")
             .attr("r", function(d) {
-                // console.log(d.firms, r(d.firms));
                 return r(d.firms);
             })
             .attr("cx", function(d) {
@@ -118,23 +119,74 @@ $(function() {
                 return y(d.activity.substring(0, 3));
             })
             .style("fill", "transparent");
+    }
 
-        svg.selectAll("text").style("font-family", "avenir");
+    /**
+     * processes SIC.json to create separate entries for conjugated SIC codes
+     * assumes equal weighting
+     * appends data with nodes for SIC codes that appear in multiple Locus coordinates
+     * @returns {JSON} with separated entries for each locus coordinate
+     */
+    function processedData() {
+        var data = [];
+        var maxFirmCount = 0;
+        var totalFirmCount = 0;
 
-        svg.selectAll("text.label")
-            .style("font-size", "16px")
-            .style("font-weight", "bold");
+        read_data.forEach(function(d, i) {
+            // if (d.year != selectedYear) {
+            //     return;
+            // }
+            var activities = d.activity.replace(/\s+/g, '').split(",");
+            var resources = d.resource.replace(/\s+/g, '').split(",");
+            for (var i = 0; i < activities.length; i++) {
+                var firmCount = d.firms / activities.length;
 
-        svg.selectAll(".tick > text")
-            .style("font-size", "12px")
+                var entry = {
+                    "year": d.year,
+                    "SIC": d.SIC,
+                    "activity": activities[i],
+                    "resource": resources[i],
+                    "firms": firmCount
+                }
+                data.push(entry);
+            }
+        });
+        return data;
+    }
+    /**
+     * helper for creating scale functions
+     * @constructor
+     * @returns {Object} with attributes {Function} x, {Function} y, and {Function} r
+     */
+    function makeScales() {
+        var Scale = { x: null, y: null, r: null };
+        Scale.x = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G"])
+            .rangePoints([width / 7, width]);
+        var ydomain = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4.1", "4.2", "4.3"];
+        Scale.y = d3.scale.ordinal().domain(ydomain)
+            .rangePoints([height / 12, height]);
 
+        Scale.r = d3.scale.sqrt().range([0, height / 12]);
 
-    });
+        return Scale;
+    }
 
+    /**
+     * sets up year slider
+     * @param {Number} specifies inital value of slider
+     */
+    function setupSlider(YEAR) {
+        $('#slider').range({
+            min: 1977,
+            max: 2013,
+            start: YEAR,
+            onChange: function(val) {
+                YEAR = val;
+                // console.log(YEAR)
+                // updateChart(YEAR);
+            }
+        });
+
+    }
 
 });
-
-
-// d3.json("SIC.json", function(error, data) {
-// if (error) throw error;
-// })
