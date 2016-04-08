@@ -35,7 +35,6 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
     var data;
     d3.json("SIC.json", function(error, read_data) {
 
@@ -67,13 +66,20 @@ $(function() {
         var totalFirmCount = 0;
         data.forEach(function(d, i) {
             if (d.year == 2013) {
-                console.log(d.firms);
                 maxFirmCount = Math.max(maxFirmCount, d.firms);
                 totalFirmCount += d.firms;
             }
         });
+        totalFirmCount = ~~(totalFirmCount)
         console.log(totalFirmCount);
         r.domain([0, maxFirmCount]);
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("Distribution of " + totalFirmCount + " firms");
 
         svg.append("g")
             .attr("class", "x axis")
@@ -96,14 +102,13 @@ $(function() {
             .text("Activity");
 
         svg.selectAll(".dot")
-            .data(data)
-            .enter().append("circle")
-            .filter(function(d) {
+            .data(data.filter(function(d) {
                 return (d.year == 2013);
-            })
+            }))
+            .enter().append("circle")
             .attr("class", "dot")
             .attr("r", function(d) {
-                console.log(d.firms, r(d.firms));
+                // console.log(d.firms, r(d.firms));
                 return r(d.firms);
             })
             .attr("cx", function(d) {
@@ -114,14 +119,15 @@ $(function() {
             })
             .style("fill", "transparent");
 
+        svg.selectAll("text").style("font-family", "avenir");
+
         svg.selectAll("text.label")
             .style("font-size", "16px")
-            .style("font-family", "avenir")
             .style("font-weight", "bold");
 
         svg.selectAll(".tick > text")
             .style("font-size", "12px")
-            .style("font-family", "avenir");
+
 
     });
 
