@@ -11,7 +11,8 @@ $(function() {
         r = Scale.r;
 
     var YEAR = 2010;
-    setupSlider(YEAR);
+    var updating = false;
+    setupSlider();
     // var color = d3.scale.category10();
 
     /** 
@@ -66,8 +67,6 @@ $(function() {
             .style("text-anchor", "end")
             .text("Activity");
 
-
-
         svg.selectAll("text").style("font-family", "avenir");
 
         svg.selectAll("text.label")
@@ -82,7 +81,6 @@ $(function() {
 
 
     function updateChart(YEAR) {
-
         var chartData = data.filter(function(d) {
             return d.year == YEAR
         });
@@ -91,19 +89,30 @@ $(function() {
             totalFirmCount = 0;
 
         chartData.forEach(function(d, i) {
-            console.log(d.firms);
             maxFirmCount = Math.max(maxFirmCount, d.firms);
             totalFirmCount += d.firms;
         });
 
+        totalFirmCount = ~~(totalFirmCount);
+
         r.domain([0, maxFirmCount]);
 
-        svg.append("text")
-            .attr("x", (width / 2))
-            .attr("y", 0 - (margin.top / 2))
-            .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .text("Distribution of " + totalFirmCount + " firms");
+        // var svg = d3.select("svg").transition();
+        var title = d3.select(".chartTitle");
+        if (title.empty()) {
+            svg.append("text")
+                .attr("x", (width / 2))
+                .attr("y", 0 - (margin.top / 2))
+                .attr("class", "chartTitle")
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text("Distribution of " + totalFirmCount + " firms");
+        } else {
+          title.transition().text("Distribution of " + totalFirmCount + " firms");
+        }
+        
+        
+
 
         svg.selectAll(".dot")
             .data(chartData)
@@ -175,15 +184,18 @@ $(function() {
      * sets up year slider
      * @param {Number} specifies inital value of slider
      */
-    function setupSlider(YEAR) {
+    function setupSlider() {
         $('#slider').range({
             min: 1977,
             max: 2013,
             start: YEAR,
             onChange: function(val) {
-                YEAR = val;
+                if (!updating) {
+                    updating = true;
+                    return;
+                }
                 // console.log(YEAR)
-                // updateChart(YEAR);
+                updateChart(val);
             }
         });
 
