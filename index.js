@@ -56,6 +56,7 @@ $(function() {
             .attr("transform", "rotate(-90) translate(0,40)")
             .style("text-anchor", "beginning")
             .text("Resource");
+
         svg.append("g").attr("class", "y axis").call(yAxis)
             .append("text")
             .attr("class", "label")
@@ -63,7 +64,7 @@ $(function() {
             .attr("transform", "translate(0,30)")
             .style("text-anchor", "end")
             .text("Activity");
-        svg.selectAll("text").style("font-family", "avenir");
+
         svg.selectAll("text.label")
             .style("font-size", "16px")
             .style("font-weight", "bold");
@@ -80,10 +81,10 @@ $(function() {
         var chartData = data.filter(function(d) {
             return d.year == YEAR
         });
-        var maxFirmCount = 0,
-            totalFirmCount = 0;
+        // var maxFirmCount = 0;
+        var totalFirmCount = 0;
         chartData.forEach(function(d, i) {
-            maxFirmCount = Math.max(maxFirmCount, d.firms);
+            // maxFirmCount = Math.max(maxFirmCount, d.firms);
             totalFirmCount += d.firms;
         });
         totalFirmCount = ~~(totalFirmCount);
@@ -107,9 +108,13 @@ $(function() {
                 return d.center;
             });
         var circles = dots.enter().append("circle")
-            .attr("class", "enter dot circle").attr('stroke', function(d) {
+            .attr("class", "enter dot circle")
+            .attr('stroke', function(d) {
                 return d.color;
-            });
+            }).attr("fill", function(d) {
+                return d.color
+            })
+            .attr("fill-opacity", 0);
         circles.transition()
             .attr("r", function(d) {
                 return r(d.firms);
@@ -121,7 +126,6 @@ $(function() {
                 return y(d.activity);
             })
             .attr("y", 0)
-            .style("fill", "transparent")
     }
 
     /**
@@ -130,15 +134,18 @@ $(function() {
      * appends data with nodes for SIC codes that appear in multiple Locus coordinates
      * @returns {JSON} with separated entries for each locus coordinate
      */
+    var maxFirmCount = 0;
+
     function processedData() {
         var data = [];
-        var maxFirmCount = 0;
+
         var totalFirmCount = 0;
         read_data.forEach(function(d, i) {
             var activities = d.activity.replace(/\s+/g, '').split(",");
             var resources = d.resource.replace(/\s+/g, '').split(",");
             for (var i = 0; i < activities.length; i++) {
                 var firmCount = d.firms / activities.length;
+                maxFirmCount = Math.max(maxFirmCount, d.firms)
                 var entry = {
                     "year": d.year,
                     "SIC": d.SIC,
@@ -166,7 +173,7 @@ $(function() {
         var ydomain = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4.1", "4.2", "4.3"];
         Scale.y = d3.scale.ordinal().domain(ydomain)
             .rangePoints([height / 12, height]);
-        Scale.r = d3.scale.sqrt().range([0, height / 12]);
+        Scale.r = d3.scale.sqrt().range([0, height / 5]);
         return Scale;
     }
 
@@ -209,44 +216,44 @@ $(function() {
 
     function setUpLabels() {
         Object.keys(COLOR_DICT).map(function(key) {
-            $(".button.container").append(makeButtonHTML(key))
+            $(".button.container").append(makeButtonHTML(key));
+
+            function makeButtonHTML(key) {
+                var color = COLOR_DICT[key][1];
+                var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'
+                return HTML
+            }
+
+            function makeToolTip(key) {
+                var HTML = 'data-content="' + key + '" data-variation="inverted tiny"'
+                return HTML;
+            }
         });
-        makeLabelControls();
 
-        $(".label.circular").popup({
-            inline: true,
-            position: 'top center',
-        });
+        (function makeLabelControls() {
+            $(".label.circular").popup({
+                inline: true,
+                position: 'top center',
+            });
 
-        function makeButtonHTML(key) {
-            var color = COLOR_DICT[key][1];
-            var HTML = '<button class="ui tiny circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'
-            return HTML
-        }
-
-        function makeToolTip(key) {
-            var HTML = 'data-content="' + key + '" data-variation="inverted tiny"'
-            return HTML;
-        }
-
-        function makeLabelControls() {
             $(".circular.label").on("mouseenter", function() {
-                $(this).removeClass("basic");
+                // $(this).removeClass("basic");
                 var sic = $(this).data("content");
-                d3.selectAll("circle").filter(function(d) {
-                    return d.SIC == sic;
-                }).style("fill", function(d) {
-                    return d.color
-                })
+                transitionCircle($(this), sic, 1);
 
             }).on("mouseleave", function() {
-                $(this).addClass("basic");
+                // $(this).addClass("basic");
                 var sic = $(this).data("content");
+                transitionCircle($(this), sic, 0);
+            })
+
+            function transitionCircle(elm, sic, op) {
+                elm.toggleClass("basic");
                 d3.selectAll("circle").filter(function(d) {
                     return d.SIC == sic;
-                }).transition().style("fill", "transparent")
-            })
-        }
+                }).transition().style("fill-opacity", op)
+            }
+        })();
     }
 
 });
