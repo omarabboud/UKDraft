@@ -10,7 +10,7 @@ $(function() {
         r = Scale.r;
 
     var YEAR = 2010;
-
+    var maxFirmCount = 0;
     setupSlider();
 
     /** 
@@ -104,9 +104,7 @@ $(function() {
         }
         svg.selectAll(".dot").remove();
         var dots = svg.selectAll(".dot")
-            .data(chartData, function(d, i) {
-                return d.center;
-            });
+            .data(chartData);
         var circles = dots.enter().append("circle")
             .attr("class", "enter dot circle")
             .attr('stroke', function(d) {
@@ -134,7 +132,6 @@ $(function() {
      * appends data with nodes for SIC codes that appear in multiple Locus coordinates
      * @returns {JSON} with separated entries for each locus coordinate
      */
-    var maxFirmCount = 0;
 
     function processedData() {
         var data = [];
@@ -216,7 +213,7 @@ $(function() {
 
     function setUpLabels() {
         Object.keys(COLOR_DICT).map(function(key) {
-            $(".button.container").append(makeButtonHTML(key));
+            $(".buttoncontainer").append(makeButtonHTML(key));
 
             function makeButtonHTML(key) {
                 var color = COLOR_DICT[key][1];
@@ -240,7 +237,6 @@ $(function() {
                 // $(this).removeClass("basic");
                 var sic = $(this).data("content");
                 transitionCircle($(this), sic, 1);
-
             }).on("mouseleave", function() {
                 // $(this).addClass("basic");
                 var sic = $(this).data("content");
