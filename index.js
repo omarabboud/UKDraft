@@ -16,8 +16,8 @@ $(function() {
     // var color = d3.scale.category10();
 
     /** 
-    create x & y axis
-    */
+     * create x & y axis
+     */
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("top")
@@ -40,6 +40,12 @@ $(function() {
 
 
     var read_data, data;
+
+    /**
+     * @param  {error} error handler in callback
+     * @param  {JSON} json - read rson object
+     * @return {error} returns error when there is one
+     */
     d3.json("SIC.json", function(error, json) {
         if (error) return error;
         read_data = json;
@@ -78,7 +84,10 @@ $(function() {
         updateChart(YEAR);
     });
 
-
+    /**
+     * manipulates charts to update circle size and chart title
+     * @param  {int} YEAR: represents a year between 1997 and 2013
+     */
     function updateChart(YEAR) {
         var chartData = data.filter(function(d) {
             return d.year == YEAR
@@ -111,17 +120,19 @@ $(function() {
         }
 
         svg.selectAll(".dot").remove();
-        var dots = svg.selectAll(".dot").data(chartData, function(d, i) {
-            return d.center;
-        });
 
-        // dots.attr("class", "update");
+        var dots = svg.selectAll(".dot")
+            .data(chartData, function(d, i) {
+                return d.center;
+            });
 
+        var circles = dots.enter().append("circle")
+            .attr("class", "enter dot").attr('stroke', function(d) {
+                return d.color;
+            });
 
-        dots.enter().append("circle")
-            .attr("class", "enter dot")
-            .transition()
-            .duration(750)
+        circles.transition()
+            // .duration(750)
             .attr("r", function(d) {
                 return r(d.firms);
             })
@@ -131,9 +142,10 @@ $(function() {
             .attr("cy", function(d) {
                 return y(d.activity);
             })
-            .attr("y", 0).style("fill", "transparent");
+            .attr("y", 0)
+            .style("fill", "transparent")
 
-        // dots.exit().attr("class", "exit").remove();
+
 
     }
 
@@ -149,9 +161,6 @@ $(function() {
         var totalFirmCount = 0;
 
         read_data.forEach(function(d, i) {
-            // if (d.year != selectedYear) {
-            //     return;
-            // }
             var activities = d.activity.replace(/\s+/g, '').split(",");
             var resources = d.resource.replace(/\s+/g, '').split(",");
             for (var i = 0; i < activities.length; i++) {
@@ -162,7 +171,8 @@ $(function() {
                     "activity": activities[i].substring(0, 3),
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
-                    "center": activities[i].substring(0, 3) + resources[i].charAt(0)
+                    "center": activities[i].substring(0, 3) + resources[i].charAt(0),
+                    "color": COLOR_DICT[d.SIC]
                 }
                 data.push(entry);
             }
@@ -189,7 +199,6 @@ $(function() {
 
     /**
      * sets up year slider
-     * @param {Number} specifies inital value of slider
      */
     function setupSlider() {
         var sliderValue = YEAR;
@@ -207,6 +216,18 @@ $(function() {
             }
         });
 
+    }
+
+    var COLOR_DICT = {
+        "7": "#db2828",
+        "10": "#f2711c",
+        "15": "#fbbd08",
+        "20": "#b5cc18",
+        "40": "#21ba45",
+        "50": "#00b5ad",
+        "52": "#2185d0",
+        "60": "#a333c8",
+        "70": "#e03997"
     }
 
 });
