@@ -44,8 +44,7 @@ $(function() {
     d3.json("SIC.json", function(error, json) {
         if (error) return error;
         read_data = json;
-        // console.log(read_data);
-        data = processedData();
+        data = processedData(true);
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + 10 + ")")
@@ -70,11 +69,14 @@ $(function() {
             .style("font-weight", "bold");
         svg.selectAll(".tick > text")
             .style("font-size", "12px");
+
         updateChart(YEAR);
     });
 
     /**
      * manipulates charts to update circle size and chart title
+     * http://www.census.gov/ces/dataproducts/bds/data_firm.html
+     * sector
      * @param  {int} YEAR: represents a year between 1997 and 2013
      */
     function updateChart(YEAR) {
@@ -133,28 +135,49 @@ $(function() {
      * @returns {JSON} with separated entries for each locus coordinate
      */
 
-    function processedData() {
+    function processedData(combineCircles) {
         var data = [];
+        var centers = {};
 
-        var totalFirmCount = 0;
         read_data.forEach(function(d, i) {
             var activities = d.activity.replace(/\s+/g, '').split(",");
             var resources = d.resource.replace(/\s+/g, '').split(",");
             for (var i = 0; i < activities.length; i++) {
+
+                var center = activities[i].substring(0, 3) + resources[i].charAt(0);
                 var firmCount = d.firms / activities.length;
-                maxFirmCount = Math.max(maxFirmCount, d.firms)
+
                 var entry = {
                     "year": d.year,
                     "SIC": d.SIC,
                     "activity": activities[i].substring(0, 3),
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
-                    "center": activities[i].substring(0, 3) + resources[i].charAt(0),
+                    "center": center,
                     "color": COLOR_DICT[d.SIC][0]
                 }
-                data.push(entry);
+
+                if (combineCircles) {
+                    var key = entry.year + center;
+                    if (key in centers) {
+                        centers[key].firms += entry.firms;
+                    } else {
+                        centers[key] = entry;
+                    }
+                } else {
+                    maxFirmCount = Math.max(maxFirmCount, d.firms)
+                    data.push(entry);
+                }
             }
+
         });
+        if (combineCircles) {
+            maxFirmCount = 0;
+            for (center in centers) {
+                maxFirmCount = Math.max(maxFirmCount, centers[center].firms)
+                data.push(centers[center])
+            }
+        }
         return data;
     }
 
@@ -170,7 +193,7 @@ $(function() {
         var ydomain = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4.1", "4.2", "4.3"];
         Scale.y = d3.scale.ordinal().domain(ydomain)
             .rangePoints([height / 12, height]);
-        Scale.r = d3.scale.sqrt().range([0, height / 5]);
+        Scale.r = d3.scale.sqrt().range([0, height / 12]);
         return Scale;
     }
 
