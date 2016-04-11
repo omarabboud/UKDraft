@@ -117,7 +117,7 @@ $(function() {
             .attr("fill-opacity", 0);
         circles.transition()
             .attr("r", function(d) {
-                return r(d.firms);
+                return r(d.firms)
             })
             .attr("cx", function(d) {
                 return x(d.resource);
@@ -188,11 +188,15 @@ $(function() {
      */
     function makeScales() {
         var Scale = { x: null, y: null, r: null };
-        Scale.x = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G"])
+
+        Scale.x = d3.scale.ordinal()
+            .domain(["A", "B", "C", "D", "E", "F", "G"])
             .rangePoints([width / 7, width]);
+
         var ydomain = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4.1", "4.2", "4.3"];
         Scale.y = d3.scale.ordinal().domain(ydomain)
             .rangePoints([height / 12, height]);
+
         Scale.r = d3.scale.sqrt().range([0, height / 12]);
         return Scale;
     }
@@ -257,20 +261,44 @@ $(function() {
             });
 
             $(".circular.label").on("mouseenter", function() {
-                // $(this).removeClass("basic");
-                var sic = $(this).data("content");
-                transitionCircle($(this), sic, 1);
+                var active = !$(this).hasClass("selected");
+                if (active) transitionCircle($(this), 1);
             }).on("mouseleave", function() {
-                // $(this).addClass("basic");
-                var sic = $(this).data("content");
-                transitionCircle($(this), sic, 0);
+                var active = !$(this).hasClass("selected");
+                if (active) transitionCircle($(this), 0);
+            }).on("click", function() {
+                $(this).toggleClass("selected");
+                transitionCircle($(this), 1);
             })
 
-            function transitionCircle(elm, sic, op) {
-                elm.toggleClass("basic");
+
+            /**
+             * TODO: HIGHLIGHT SUBCIRCLES WITH SIC CODES — MAYBE HIGHLIGHT BIG CIRCLE THAT CONTAINS
+             * @param  {[type]}
+             * @param  {[type]}
+             * @return {[type]}
+             */
+            function transitionCircle(elm, op) {
+                var active = !$(this).hasClass("selected");
+                if (!active) {
+                    elm.toggleClass("basic");
+                };
+                var sic = elm.data("content");
+                if (op == 1) {
+                    elm.removeClass("basic")
+                } else {
+                    elm.addClass("basic");
+                }
                 d3.selectAll("circle").filter(function(d) {
                     return d.SIC == sic;
                 }).transition().style("fill-opacity", op)
+            }
+
+            function handleLabelClick(elm) {
+                var sic = elm.data("content");
+                if (elm.hasClass("selected")) {
+                    transitionCircle(elm, 1);
+                }
             }
         })();
     }
