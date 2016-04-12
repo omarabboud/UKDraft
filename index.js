@@ -11,7 +11,6 @@ $(function() {
 
     var YEAR = 2010;
     var maxFirmCount = 0;
-    setupSlider();
 
     /** 
      * create x & y axis
@@ -34,17 +33,20 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var read_data, data;
-
     /**
      * @param  {error} error handler in callback
      * @param  {JSON} json - read rson object
      * @return {error} returns error when there is one
      */
+    var output;
+    var data, history;
     d3.json("SIC.json", function(error, json) {
         if (error) return error;
-        read_data = json;
-        data = processedData(true);
+        output = processedData(json, false);
+        setupSlider(output.MIN_YEAR, output.MAX_YEAR);
+        data = output.data;
+        history = output.coordHistory;
+
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + 10 + ")")
@@ -71,7 +73,10 @@ $(function() {
             .style("font-size", "12px");
 
         updateChart(YEAR);
+
     });
+
+    // console.log(data)
 
     /**
      * manipulates charts to update circle size and chart title
@@ -83,14 +88,12 @@ $(function() {
         var chartData = data.filter(function(d) {
             return d.year == YEAR
         });
-        // var maxFirmCount = 0;
         var totalFirmCount = 0;
         chartData.forEach(function(d, i) {
-            // maxFirmCount = Math.max(maxFirmCount, d.firms);
             totalFirmCount += d.firms;
         });
         totalFirmCount = ~~(totalFirmCount);
-        r.domain([0, maxFirmCount]);
+
         // var svg = d3.select("svg").transition();
         var title = d3.select(".chartTitle");
         if (title.empty()) {
@@ -126,6 +129,10 @@ $(function() {
                 return y(d.activity);
             })
             .attr("y", 0)
+
+        circles.on("click", function(d) {
+            createChart(history[d.center]);
+        });
     }
 
     /**
@@ -134,14 +141,22 @@ $(function() {
      * appends data with nodes for SIC codes that appear in multiple Locus coordinates
      * @returns {JSON} with separated entries for each locus coordinate
      */
-
-    function processedData(combineCircles) {
+    function processedData(read_data, combineCircles) {
         var data = [];
         var centers = {};
+        var output = {
+            "data": null,
+            "MIN_YEAR": Number.MAX_SAFE_INTEGER,
+            "MAX_YEAR": 0,
+            "coordHistory": null
+        }
 
         read_data.forEach(function(d, i) {
             var activities = d.activity.replace(/\s+/g, '').split(",");
             var resources = d.resource.replace(/\s+/g, '').split(",");
+            output.MIN_YEAR = Math.min(output.MIN_YEAR, d.year);
+            output.MAX_YEAR = Math.max(output.MAX_YEAR, d.year);
+
             for (var i = 0; i < activities.length; i++) {
 
                 var center = activities[i].substring(0, 3) + resources[i].charAt(0);
@@ -149,7 +164,7 @@ $(function() {
 
                 var entry = {
                     "year": d.year,
-                    "SIC": d.SIC,
+                    "SIC": [d.SIC],
                     "activity": activities[i].substring(0, 3),
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
@@ -161,11 +176,13 @@ $(function() {
                     var key = entry.year + center;
                     if (key in centers) {
                         centers[key].firms += entry.firms;
+                        centers[key].SIC = centers[key].SIC.concat(entry.SIC);
                     } else {
                         centers[key] = entry;
                     }
                 } else {
-                    maxFirmCount = Math.max(maxFirmCount, d.firms)
+
+                    maxFirmCount = Math.max(maxFirmCount, entry.firms)
                     data.push(entry);
                 }
             }
@@ -178,7 +195,24 @@ $(function() {
                 data.push(centers[center])
             }
         }
-        return data;
+
+        output.coordHistory = (function() {
+            var h = {};
+            for (i in data) {
+                var d = data[i];
+                var center = d.center;
+
+                if (!(center in h)) {
+                    h[center] = new Array(output.MAX_YEAR - output.MIN_YEAR + 1);
+                }
+                h[center][d.year - output.MIN_YEAR] = d.firms;
+            }
+            return h;
+        })();
+
+        r.domain([0, maxFirmCount]);
+        output.data = data;
+        return output;
     }
 
     /**
@@ -204,13 +238,13 @@ $(function() {
     /**
      * sets up year slider
      */
-    function setupSlider() {
+    function setupSlider(min, max) {
         var sliderValue = YEAR;
         $(".slider.value").html(YEAR);
 
         $('#slider').range({
-            min: 1977,
-            max: 2013,
+            min: min,
+            max: max,
             start: YEAR,
             onChange: function(val) {
                 if (val != YEAR) {
@@ -222,7 +256,7 @@ $(function() {
             }
         });
         $(".slider.value").css({ left: $(".thumb").position().left })
-    }
+    };
 
     var COLOR_DICT = {
             "7": ["#db2828", "red"],
@@ -235,7 +269,7 @@ $(function() {
             "60": ["#a333c8", "purple"],
             "70": ["#e03997", "pink"]
         }
-        // labelControls();
+
     setUpLabels();
 
     function setUpLabels() {
@@ -271,7 +305,6 @@ $(function() {
                 transitionCircle($(this), 1);
             })
 
-
             /**
              * TODO: HIGHLIGHT SUBCIRCLES WITH SIC CODES — MAYBE HIGHLIGHT BIG CIRCLE THAT CONTAINS
              * @param  {[type]}
@@ -290,7 +323,7 @@ $(function() {
                     elm.addClass("basic");
                 }
                 d3.selectAll("circle").filter(function(d) {
-                    return d.SIC == sic;
+                    return (d.SIC.indexOf(sic) != -1)
                 }).transition().style("fill-opacity", op)
             }
 
