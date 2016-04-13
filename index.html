@@ -34,20 +34,28 @@
     
     .controls.container {
         position: absolute;
-        margin-left: 50%;
-        margin-top: 30%;
+        margin-left: 40%;
+        bottom: 2vh;
         width: 40vw;
     }
     
     .circular.label.basic {
         margin: 1px;
     }
+    
+    svg {
+        position: absolute;
+    }
+    
+    .chart {
+        /*margin-left: 600px;*/
+    }
     </style>
 
     <body>
         <div class="controls container">
             <div class="buttoncontainer ui segment">
-               <h4 class="ui header">Hover to highlight SIC codes</h4>
+                <h4 class="ui header">Hover to highlight SIC codes</h4>
             </div>
             <div class="slider container">
                 <div class="ui teal range" id="slider"></div>
@@ -55,6 +63,7 @@
                 </div>
             </div>
         </div>
+        <svg class="chart"></svg>
     </body>
 
 </html>

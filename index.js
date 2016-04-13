@@ -1,5 +1,5 @@
 $(function() {
-    var margin = { top: 80, right: 20, bottom: 20, left: 80 };
+    var margin = { top: 100, right: 20, bottom: 20, left: 80 };
     var width = 500 - margin.left - margin.right;
 
     // calculate height to keep grid items square
@@ -30,6 +30,7 @@ $(function() {
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .attr("class", "circle plot")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -39,44 +40,48 @@ $(function() {
      * @return {error} returns error when there is one
      */
     var output;
-    var data, history;
-    d3.json("SIC.json", function(error, json) {
-        if (error) return error;
-        output = processedData(json, false);
-        setupSlider(output.MIN_YEAR, output.MAX_YEAR);
-        data = output.data;
-        history = output.coordHistory;
+    var data, history, weights;
+    // var chart = new createChart();
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + 10 + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("class", "label")
-            .attr("y", -10)
-            .attr("transform", "rotate(-90) translate(0,40)")
-            .style("text-anchor", "beginning")
-            .text("Resource");
+    d3.json("weights.json", function(error, json) {
+        weights = json;
+        d3.json("SIC.json", function(error, json) {
+            console.log(weights)
+            if (error) return error;
+            output = processedData(json, weights, false);
+            setupSlider(output.MIN_YEAR, output.MAX_YEAR);
+            data = output.data;
+            history = output.coordHistory;
+            // createChart(history);
+            updateChart(YEAR);
 
-        svg.append("g").attr("class", "y axis").call(yAxis)
-            .append("text")
-            .attr("class", "label")
-            .attr("y", -10)
-            .attr("transform", "translate(0,30)")
-            .style("text-anchor", "end")
-            .text("Activity");
-
-        svg.selectAll("text.label")
-            .style("font-size", "16px")
-            .style("font-weight", "bold");
-        svg.selectAll(".tick > text")
-            .style("font-size", "12px");
-
-        updateChart(YEAR);
-
+        });
     });
 
-    // console.log(data)
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + 10 + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("class", "label")
+        .attr("y", -10)
+        .attr("transform", "rotate(-90) translate(0,40)")
+        .style("text-anchor", "beginning")
+        .text("Resource");
+
+    svg.append("g").attr("class", "y axis").call(yAxis)
+        .append("text")
+        .attr("class", "label")
+        .attr("y", -10)
+        .attr("transform", "translate(0,30)")
+        .style("text-anchor", "end")
+        .text("Activity");
+
+    svg.selectAll("text.label")
+        .style("font-size", "16px")
+        .style("font-weight", "bold");
+    svg.selectAll(".tick > text")
+        .style("font-size", "12px");
 
     /**
      * manipulates charts to update circle size and chart title
@@ -94,8 +99,13 @@ $(function() {
         });
         totalFirmCount = ~~(totalFirmCount);
 
-        // var svg = d3.select("svg").transition();
         var title = d3.select(".chartTitle");
+        svg.append("text").attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 4))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("click on circle to visualize change");
+
         if (title.empty()) {
             svg.append("text")
                 .attr("x", (width / 2))
@@ -110,6 +120,7 @@ $(function() {
         svg.selectAll(".dot").remove();
         var dots = svg.selectAll(".dot")
             .data(chartData);
+
         var circles = dots.enter().append("circle")
             .attr("class", "enter dot circle")
             .attr('stroke', function(d) {
@@ -118,6 +129,7 @@ $(function() {
                 return d.color
             })
             .attr("fill-opacity", 0);
+
         circles.transition()
             .attr("r", function(d) {
                 return r(d.firms)
@@ -131,6 +143,7 @@ $(function() {
             .attr("y", 0)
 
         circles.on("click", function(d) {
+            // chart.update(history);
             createChart(history[d.center]);
         });
     }
@@ -141,8 +154,8 @@ $(function() {
      * appends data with nodes for SIC codes that appear in multiple Locus coordinates
      * @returns {JSON} with separated entries for each locus coordinate
      */
-    function processedData(read_data, combineCircles) {
-        var data = [];
+    function processedData(read_data, weights, combineCircles) {
+        var processing = [];
         var centers = {};
         var output = {
             "data": null,
@@ -156,11 +169,20 @@ $(function() {
             var resources = d.resource.replace(/\s+/g, '').split(",");
             output.MIN_YEAR = Math.min(output.MIN_YEAR, d.year);
             output.MAX_YEAR = Math.max(output.MAX_YEAR, d.year);
+            var activity, resource, center, weight, count;
 
             for (var i = 0; i < activities.length; i++) {
+                activity = activities[i].substring(0, 3)
+                resource = resources[i].charAt(0);
+                center = activity + resource;
+                count = weights[d.SIC][center];
+                if (isNaN(count)){
+                  count =1;
+                }
+                weight = count / weights[d.SIC].sum
+                console.log(d.SIC, center, weights[d.SIC], weight)
 
-                var center = activities[i].substring(0, 3) + resources[i].charAt(0);
-                var firmCount = d.firms / activities.length;
+                var firmCount = d.firms * weight;
 
                 var entry = {
                     "year": d.year,
@@ -183,7 +205,7 @@ $(function() {
                 } else {
 
                     maxFirmCount = Math.max(maxFirmCount, entry.firms)
-                    data.push(entry);
+                    processing.push(entry);
                 }
             }
 
@@ -192,14 +214,14 @@ $(function() {
             maxFirmCount = 0;
             for (center in centers) {
                 maxFirmCount = Math.max(maxFirmCount, centers[center].firms)
-                data.push(centers[center])
+                processing.push(centers[center])
             }
         }
 
         output.coordHistory = (function() {
             var h = {};
-            for (i in data) {
-                var d = data[i];
+            for (i in processing) {
+                var d = processing[i];
                 var center = d.center;
 
                 if (!(center in h)) {
@@ -211,7 +233,7 @@ $(function() {
         })();
 
         r.domain([0, maxFirmCount]);
-        output.data = data;
+        output.data = processing;
         return output;
     }
 
@@ -253,22 +275,35 @@ $(function() {
                     $(".slider.value").html(val);
                     $(".slider.value").css({ left: $(".thumb").position().left - $(".thumb").width() / 2 })
                 }
+                $(".circular.label").removeClass("selected").addClass("basic")
             }
         });
         $(".slider.value").css({ left: $(".thumb").position().left })
     };
 
     var COLOR_DICT = {
-            "7": ["#db2828", "red"],
-            "10": ["#f2711c", "orange"],
-            "15": ["#fbbd08", "yellow"],
-            "20": ["#b5cc18", "olive"],
-            "40": ["#21ba45", "green"],
-            "50": ["#00b5ad", "teal"],
-            "52": ["#2185d0", "blue"],
-            "60": ["#a333c8", "purple"],
-            "70": ["#e03997", "pink"]
-        }
+        "7": ["#db2828", "red"],
+        "10": ["#f2711c", "orange"],
+        "15": ["#fbbd08", "yellow"],
+        "20": ["#b5cc18", "olive"],
+        "40": ["#21ba45", "green"],
+        "50": ["#00b5ad", "teal"],
+        "52": ["#2185d0", "blue"],
+        "60": ["#a333c8", "purple"],
+        "70": ["#e03997", "pink"]
+    }
+
+    var CODE_DICT = {
+        "7": "agriculture, forestry, fishing",
+        "10": "mining",
+        "15": "construction",
+        "20": "manufacturing",
+        "40": "transportation & public utilities",
+        "50": "wholesale trade",
+        "52": "retail trade",
+        "60": "finance, insurance, real estate",
+        "70": "services"
+    }
 
     setUpLabels();
 
@@ -283,57 +318,117 @@ $(function() {
             }
 
             function makeToolTip(key) {
-                var HTML = 'data-content="' + key + '" data-variation="inverted tiny"'
+                var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + CODE_DICT[key] + '" data-variation="inverted tiny"'
                 return HTML;
             }
         });
 
-        (function makeLabelControls() {
-            $(".label.circular").popup({
-                inline: true,
-                position: 'top center',
-            });
+        $(".label.circular").popup({
+            inline: true,
+            position: 'top center',
+        });
 
-            $(".circular.label").on("mouseenter", function() {
-                var active = !$(this).hasClass("selected");
-                if (active) transitionCircle($(this), 1);
-            }).on("mouseleave", function() {
-                var active = !$(this).hasClass("selected");
-                if (active) transitionCircle($(this), 0);
-            }).on("click", function() {
-                $(this).toggleClass("selected");
-                transitionCircle($(this), 1);
+        $(".circular.label").on("mouseenter", function() {
+            var active = !$(this).hasClass("selected");
+            if (active) transitionCircle($(this), 1);
+        }).on("mouseleave", function() {
+            var active = !$(this).hasClass("selected");
+            if (active) transitionCircle($(this), 0);
+        }).on("click", function() {
+            $(this).toggleClass("selected");
+            transitionCircle($(this), 1);
+        })
+
+        function transitionCircle(elm, op) {
+            var active = !$(this).hasClass("selected");
+            if (!active) {
+                elm.toggleClass("basic");
+            };
+            var sic = elm.data("key");
+            if (op == 1) {
+                elm.removeClass("basic")
+            } else {
+                elm.addClass("basic");
+            }
+            d3.selectAll(".dot").filter(function(d) {
+                return (d.SIC.indexOf(sic) != -1)
+            }).transition().style("fill-opacity", op)
+        }
+
+        function handleLabelClick(elm) {
+            var sic = elm.data("content");
+            if (elm.hasClass("selected")) {
+                transitionCircle(elm, 1);
+            }
+        }
+    }
+
+    /**
+     * @param  {ARRAY} values to plot
+     * @return {null}
+     */
+    function createChart(history) {
+        // var history = [1, 1]
+        var margin = { top: 50, right: 20, bottom: 30, left: 600 },
+            width = 960 - margin.left - margin.right,
+            height = 550 - margin.top - margin.bottom;
+
+        var formatDate = d3.time.format("%d-%b-%y");
+
+        var svg = d3.select(".chart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scale.linear()
+            .range([0, width])
+            .domain([0 + output.MIN_YEAR, history.length + output.MIN_YEAR]);
+
+        var y = d3.scale.linear()
+            .range([height, 0])
+            .domain(d3.extent(history));
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom").ticks(5);
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left").ticks(5);
+
+        d3.selectAll(".point").remove();
+        svg.selectAll(".tick").remove();
+
+        svg.selectAll(".point")
+            .data(history)
+            .enter().append("circle")
+            .attr("class", "point")
+            .attr("r", 3.5)
+            .attr("cx", function(d, i) {
+                // console.log(d, i)
+                return x(i + output.MIN_YEAR);
+            })
+            .attr("cy", function(d) {
+                console.log(d)
+                return y(d)
             })
 
-            /**
-             * TODO: HIGHLIGHT SUBCIRCLES WITH SIC CODES — MAYBE HIGHLIGHT BIG CIRCLE THAT CONTAINS
-             * @param  {[type]}
-             * @param  {[type]}
-             * @return {[type]}
-             */
-            function transitionCircle(elm, op) {
-                var active = !$(this).hasClass("selected");
-                if (!active) {
-                    elm.toggleClass("basic");
-                };
-                var sic = elm.data("content");
-                if (op == 1) {
-                    elm.removeClass("basic")
-                } else {
-                    elm.addClass("basic");
-                }
-                d3.selectAll("circle").filter(function(d) {
-                    return (d.SIC.indexOf(sic) != -1)
-                }).transition().style("fill-opacity", op)
-            }
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
 
-            function handleLabelClick(elm) {
-                var sic = elm.data("content");
-                if (elm.hasClass("selected")) {
-                    transitionCircle(elm, 1);
-                }
-            }
-        })();
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Firm count");
+
     }
 
 });
