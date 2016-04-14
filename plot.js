@@ -1,81 +1,104 @@
-var width = 960,
-    size = 150,
-    padding = 19.5;
+$(function() {
+    /**
+     * wait for data to be calculated and made available to this file
+     */
+    waitdataready();
 
-var x = d3.scale.linear()
-    .range([padding / 2, size - padding / 2]);
+    function waitdataready() {
+        if (data == null) {
+            setTimeout(waitdataready, 500);
+            return;
+        }
+    }
 
-var y = d3.scale.linear()
-    .range([size - padding / 2, padding / 2]);
+    var width = 960,
+        size = 150,
+        padding = 19.5;
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .ticks(5);
+    var x = d3.scale.linear()
+        .range([padding / 2, size - padding / 2]);
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(5);
+    var y = d3.scale.linear()
+        .range([size - padding / 2, padding / 2]);
 
-var color = d3.scale.category10();
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(5);
 
-d3.json("SIC.json", function(error, data) {
-    if (error) throw error;
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5);
 
-    var domainByTrait = {},
-        traits = d3.keys(data[0]).filter(function(d) {
-            return d !== "species"; }),
-        n = traits.length;
+    var color = d3.scale.category10();
+
+    var domainByTrait = {};
+    var traits = d3.keys(data[0]).filter(function(d) {
+        return d !== "species";
+    });
+
+    var n = traits.length;
 
     traits.forEach(function(trait) {
         domainByTrait[trait] = d3.extent(data, function(d) {
-            return d[trait]; });
+            return d[trait];
+        });
     });
 
     xAxis.tickSize(size * n);
     yAxis.tickSize(-size * n);
 
     var svg = d3.select("body").append("svg")
+        .attr("class", "scatter")
         .attr("width", size * n + padding)
         .attr("height", size * n + padding)
         .append("g")
         .attr("transform", "translate(" + padding + "," + padding / 2 + ")");
 
-    svg.selectAll(".x.axis")
+    svg.selectAll(".x.axis.scatter")
         .data(traits)
         .enter().append("g")
-        .attr("class", "x axis")
+        .attr("class", "x axis scatter")
         .attr("transform", function(d, i) {
-            return "translate(" + (n - i - 1) * size + ",0)"; })
-        .each(function(d) { x.domain(domainByTrait[d]);
-            d3.select(this).call(xAxis); });
+            return "translate(" + (n - i - 1) * size + ",0)";
+        })
+        .each(function(d) {
+            x.domain(domainByTrait[d]);
+            d3.select(this).call(xAxis);
+        });
 
-    svg.selectAll(".y.axis")
+    svg.selectAll(".y.axis.scatter")
         .data(traits)
         .enter().append("g")
-        .attr("class", "y axis")
+        .attr("class", "y axis scatter")
         .attr("transform", function(d, i) {
-            return "translate(0," + i * size + ")"; })
-        .each(function(d) { y.domain(domainByTrait[d]);
-            d3.select(this).call(yAxis); });
+            return "translate(0," + i * size + ")";
+        })
+        .each(function(d) {
+            y.domain(domainByTrait[d]);
+            d3.select(this).call(yAxis);
+        });
 
-    var cell = svg.selectAll(".cell")
+    var cells = svg.selectAll(".cell")
         .data(cross(traits, traits))
         .enter().append("g")
         .attr("class", "cell")
         .attr("transform", function(d) {
-            return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")"; })
+            return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")";
+        })
         .each(plot);
 
     // Titles for the diagonal.
-    cell.filter(function(d) {
-            return d.i === d.j; }).append("text")
+    cells.filter(function(d) {
+            return d.i === d.j;
+        }).append("text")
         .attr("x", padding)
         .attr("y", padding)
         .attr("dy", ".71em")
         .text(function(d) {
-            return d.x; });
+            return d.x;
+        });
 
     function plot(p) {
         var cell = d3.select(this);
@@ -90,16 +113,20 @@ d3.json("SIC.json", function(error, data) {
             .attr("width", size - padding)
             .attr("height", size - padding);
 
-        cell.selectAll("circle")
+        cell.selectAll(".scatterpoint")
             .data(data)
             .enter().append("circle")
+            .attr("class", "scatterpoint")
             .attr("cx", function(d) {
-                return x(d[p.x]); })
+                return 1;
+            })
             .attr("cy", function(d) {
-                return y(d[p.y]); })
+                return 1;
+            })
             .attr("r", 3)
-            .style("fill", function(d) {
-                return color(d.species); });
+            .style("fill", function(d, i) {
+                return color(i);
+            });
     }
 
     function cross(a, b) {
@@ -107,10 +134,15 @@ d3.json("SIC.json", function(error, data) {
             n = a.length,
             m = b.length,
             i, j;
-        for (i = -1; ++i < n;)
-            for (j = -1; ++j < m;) c.push({ x: a[i], i: i, y: b[j], j: j });
+        for (i = -1; i < n; i++) {
+            for (j = -1; j < m; j++) {
+                c.push({ x: a[i], i: i, y: b[j], j: j });
+            }
+        }
+
         return c;
     }
 
     d3.select(self.frameElement).style("height", size * n + padding + 20 + "px");
-});
+
+})
