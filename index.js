@@ -1,8 +1,9 @@
-var output;
-var data, weights;
-var annualHistory;
+var annualHistory, output;
+var SIC_DICT;
+var maxFirmCount = 0;
 
 $(function() {
+    var data, weights;
     var margin = { top: 100, right: 20, bottom: 20, left: 80 };
     var width = 500 - margin.left - margin.right;
 
@@ -14,8 +15,6 @@ $(function() {
         r = Scale.r;
 
     var YEAR = 2010;
-    var maxFirmCount = 0;
-
 
     /** 
      * create x & y axis
@@ -152,6 +151,7 @@ $(function() {
      * assumes equal weighting
      * appends data with nodes for SIC codes that appear in multiple Locus coordinates
      * @returns {JSON} with separated entries for each locus coordinate
+     * as well as time series data for each coordinate metadata
      */
     function processedData(read_data, weights, combineCircles) {
         var processing = [];
@@ -193,7 +193,7 @@ $(function() {
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
                     "center": center,
-                    "color": COLOR_DICT[d.SIC][0]
+                    "color": SIC_DICT[d.SIC].color[0]
                 }
 
                 if (combineCircles) {
@@ -228,13 +228,18 @@ $(function() {
             var h = {};
             for (i in processing) {
                 var d = processing[i];
+                var color = d.color;
                 var center = d.center;
 
                 if (!(center in h)) {
-                    h[center] = new Array(output.MAX_YEAR - output.MIN_YEAR + 1);
+                    h[center] = {};
+                    h[center]["data"] = new Array(output.MAX_YEAR - output.MIN_YEAR + 1);
+                    h[center]["color"] = d.color;
                 }
-                h[center][d.year - output.MIN_YEAR] = d.firms;
+                h[center].data[d.year - output.MIN_YEAR] = d.firms;
             }
+            h["MIN_YEAR"] = output.MIN_YEAR;
+            h["MAX_YEAR"] = output.MAX_YEAR;
             return h;
         })();
 
@@ -289,28 +294,43 @@ $(function() {
         $(".slider.value").css({ left: $(".thumb").position().left })
     };
 
-    var COLOR_DICT = {
-        "7": ["#db2828", "red"],
-        "10": ["#f2711c", "orange"],
-        "15": ["#fbbd08", "yellow"],
-        "20": ["#b5cc18", "olive"],
-        "40": ["#21ba45", "green"],
-        "50": ["#00b5ad", "teal"],
-        "52": ["#2185d0", "blue"],
-        "60": ["#a333c8", "purple"],
-        "70": ["#e03997", "pink"]
-    }
-
-    var CODE_DICT = {
-        "7": "agriculture, forestry, fishing",
-        "10": "mining",
-        "15": "construction",
-        "20": "manufacturing",
-        "40": "transportation & public utilities",
-        "50": "wholesale trade",
-        "52": "retail trade",
-        "60": "finance, insurance, real estate",
-        "70": "services"
+    SIC_DICT = {
+        "7": {
+            "color": ["#db2828", "red"],
+            "name": "agriculture, forestry, fishing"
+        },
+        "10": {
+            "color": ["#f2711c", "orange"],
+            "name": "mining"
+        },
+        "15": {
+            "color": ["#fbbd08", "yellow"],
+            "name": "construction"
+        },
+        "20": {
+            "color": ["#b5cc18", "olive"],
+            "name": "manufacturing"
+        },
+        "40": {
+            "color": ["#21ba45", "green"],
+            "name": "transportation & public utilities"
+        },
+        "50": {
+            "color": ["#00b5ad", "teal"],
+            "name": "wholesale trade"
+        },
+        "52": {
+            "color": ["#2185d0", "blue"],
+            "name": "retail trade"
+        },
+        "60": {
+            "color": ["#a333c8", "purple"],
+            "name": "finance, insurance, real estate"
+        },
+        "70": {
+            "color": ["#e03997", "pink"],
+            "name": "services"
+        }
     }
 
     setUpLabels();
@@ -320,17 +340,17 @@ $(function() {
      * interacts with the circle chart
      */
     function setUpLabels() {
-        for (key in COLOR_DICT) {
+        for (key in SIC_DICT) {
             $(".buttoncontainer").append(makeButtonHTML(key));
 
             function makeButtonHTML(key) {
-                var color = COLOR_DICT[key][1];
+                var color = SIC_DICT[key].color[1];
                 var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'
                 return HTML
             }
 
             function makeToolTip(key) {
-                var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + CODE_DICT[key] + '" data-variation="inverted tiny"'
+                var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + SIC_DICT[key].name + '" data-variation="inverted tiny"'
                 return HTML;
             }
         };
@@ -384,7 +404,8 @@ $(function() {
      * @return {null}
      */
     function createChart(centerHistory) {
-        // var centerHistory = [1, 1]
+        var history = centerHistory.data
+            // var centerHistory = [1, 1]
         var margin = { top: 50, right: 20, bottom: 30, left: 600 },
             width = 960 - margin.left - margin.right,
             height = 550 - margin.top - margin.bottom;
@@ -399,11 +420,11 @@ $(function() {
 
         var x = d3.scale.linear()
             .range([0, width])
-            .domain([0 + output.MIN_YEAR, centerHistory.length + output.MIN_YEAR]);
+            .domain([0 + output.MIN_YEAR, history.length + output.MIN_YEAR]);
 
         var y = d3.scale.linear()
             .range([height, 0])
-            .domain(d3.extent(centerHistory));
+            .domain(d3.extent(history));
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -417,7 +438,7 @@ $(function() {
         svg.selectAll(".tick").remove();
 
         svg.selectAll(".point")
-            .data(centerHistory)
+            .data(history)
             .enter().append("circle")
             .attr("class", "point")
             .attr("r", 3.5)

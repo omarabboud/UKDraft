@@ -1,16 +1,57 @@
-$(function() {
-    /**
-     * wait for data to be calculated and made available to this file
-     */
-    waitdataready();
+/**
+ * wait for data to be calculated and made available to this file
+ */
 
-    function waitdataready() {
-        if (data == null) {
-            setTimeout(waitdataready, 500);
-            return;
+waitdataready();
+
+function waitdataready(documentReady) {
+    if (annualHistory == null) {
+        setTimeout(waitdataready, 500);
+        return;
+    }
+    processAnnualData();
+}
+
+var data = [],
+    resources = ["A", "B", "C", "D", "E"],
+    activities = [1, 2, 3, 4];
+
+function processAnnualData() {
+    var actGroup, resGroup, newCenter, entry,
+        added = {};
+
+    for (center in annualHistory) {
+        if (center == "MIN_YEAR" || center == "MAX_YEAR") {
+            continue;
+        }
+
+        actGroup = center.charAt(0); // first character, "2"
+        resGroup = center.slice(-1); // last character of string, "E"
+        newCenter = actGroup + resGroup; // '2E'
+
+        entry = {
+                "activity": actGroup,
+                "resource": resGroup,
+                "center": newCenter,
+                "history": annualHistory[center].data
+            }
+            // console.log(newCenter)
+        if (newCenter in added) {
+            var history = added[newCenter].history;
+            for (var i = 0; i < history.length; i++) {
+                history[i] += entry.history[i]
+            }
+        } else {
+            added[newCenter] = entry;
         }
     }
+    for (var entry in added) {
+        data.push(added[entry]);
+    }
+    makeChart();
+}
 
+function makeChart() {
     var width = 960,
         size = 150,
         padding = 19.5;
@@ -20,6 +61,10 @@ $(function() {
 
     var y = d3.scale.linear()
         .range([size - padding / 2, padding / 2]);
+
+    var resourceToInt = d3.scale.ordinal()
+        .domain(activities)
+        .range([0, 4])
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -33,78 +78,59 @@ $(function() {
 
     var color = d3.scale.category10();
 
-    var domainByTrait = {};
-    var traits = d3.keys(data[0]).filter(function(d) {
-        return d !== "species";
-    });
+    var m = resources.length;
+    var n = activities.length;
 
-    var n = traits.length;
-
-    traits.forEach(function(trait) {
-        domainByTrait[trait] = d3.extent(data, function(d) {
-            return d[trait];
-        });
-    });
-
-    xAxis.tickSize(size * n);
-    yAxis.tickSize(-size * n);
+    xAxis.tickSize(size * m);
+    yAxis.tickSize(-size * (n+1));
 
     var svg = d3.select("body").append("svg")
         .attr("class", "scatter")
-        .attr("width", size * n + padding)
+        .attr("width", size * m + padding)
         .attr("height", size * n + padding)
         .append("g")
         .attr("transform", "translate(" + padding + "," + padding / 2 + ")");
 
     svg.selectAll(".x.axis.scatter")
-        .data(traits)
+        .data(resources)
         .enter().append("g")
         .attr("class", "x axis scatter")
         .attr("transform", function(d, i) {
-            return "translate(" + (n - i - 1) * size + ",0)";
+            return "translate(" + (n - i) * size + ",0)";
         })
         .each(function(d) {
-            x.domain(domainByTrait[d]);
+            x.domain([0, maxFirmCount]);
             d3.select(this).call(xAxis);
         });
 
     svg.selectAll(".y.axis.scatter")
-        .data(traits)
+        .data(activities)
         .enter().append("g")
         .attr("class", "y axis scatter")
         .attr("transform", function(d, i) {
             return "translate(0," + i * size + ")";
         })
         .each(function(d) {
-            y.domain(domainByTrait[d]);
+            y.domain([0, maxFirmCount]);
             d3.select(this).call(yAxis);
         });
 
-    var cells = svg.selectAll(".cell")
-        .data(cross(traits, traits))
+    var cell = svg.selectAll(".cell")
+        .data(data)
         .enter().append("g")
-        .attr("class", "cell")
+        .attr("class", function(d) {
+            return d.center + " cell"
+        })
         .attr("transform", function(d) {
-            return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")";
+            return "translate(" + d.activity * size + "," + resourceToInt(d.resource) * size + ")";
         })
         .each(plot);
-
-    // Titles for the diagonal.
-    cells.filter(function(d) {
-            return d.i === d.j;
-        }).append("text")
-        .attr("x", padding)
-        .attr("y", padding)
-        .attr("dy", ".71em")
-        .text(function(d) {
-            return d.x;
-        });
 
     function plot(p) {
         var cell = d3.select(this);
 
-        x.domain(domainByTrait[p.x]);
-        y.domain(domainByTrait[p.y]);
+        x.domain([output.MIN_YEAR, output.MAX_YEAR]);
+        y.domain([0, maxFirmCount]);
 
         cell.append("rect")
             .attr("class", "frame")
@@ -129,20 +155,6 @@ $(function() {
             });
     }
 
-    function cross(a, b) {
-        var c = [],
-            n = a.length,
-            m = b.length,
-            i, j;
-        for (i = -1; i < n; i++) {
-            for (j = -1; j < m; j++) {
-                c.push({ x: a[i], i: i, y: b[j], j: j });
-            }
-        }
-
-        return c;
-    }
-
     d3.select(self.frameElement).style("height", size * n + padding + 20 + "px");
 
-})
+}
