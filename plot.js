@@ -19,7 +19,7 @@ var data = [],
 function processAnnualData() {
     var actGroup, resGroup, newCenter, entry,
         added = {};
-        console.log(annualHistory)
+    console.log(annualHistory)
     for (center in annualHistory) {
         if (center == "MIN_YEAR" || center == "MAX_YEAR") {
             continue;
@@ -33,7 +33,7 @@ function processAnnualData() {
             "activity": actGroup,
             "resource": resGroup,
             "center": newCenter,
-            "color" : annualHistory[center].color,
+            "color": annualHistory[center].color,
             "history": annualHistory[center].data
         }
         if (newCenter in added) {
@@ -144,6 +144,12 @@ function makeChart() {
             .attr("y", padding / 2)
             .attr("width", size - padding)
             .attr("height", size - padding).style("fill", "none");
+        cell.append("text")
+            .attr("x", size/2)
+            .attr("y", size/2)
+            .attr("color", "black")
+            .text(function() {
+                return center });
 
         var history, color;
         for (var i = 0; i < data.length; i++) {
