@@ -13,7 +13,7 @@ function waitdataready(documentReady) {
 }
 
 var data = [],
-    resources = ["A", "B", "C", "D", "E"],
+    resources = ["A", "B", "C", "D", "E", "F", "G"],
     activities = [1, 2, 3, 4];
 
 function processAnnualData() {
@@ -63,8 +63,8 @@ function makeChart() {
         .range([size - padding / 2, padding / 2]);
 
     var resourceToInt = d3.scale.ordinal()
-        .domain(activities)
-        .range([0, 4])
+        .domain(resources)
+        .range([0, 6])
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -81,8 +81,10 @@ function makeChart() {
     var m = resources.length;
     var n = activities.length;
 
-    xAxis.tickSize(size * m);
-    yAxis.tickSize(-size * (n+1));
+    console.log("m" + m + ", n:" + n);
+
+    xAxis.tickSize(size * n);
+    yAxis.tickSize(-size * m);
 
     var svg = d3.select("body").append("svg")
         .attr("class", "scatter")
@@ -96,7 +98,7 @@ function makeChart() {
         .enter().append("g")
         .attr("class", "x axis scatter")
         .attr("transform", function(d, i) {
-            return "translate(" + (n - i) * size + ",0)";
+            return "translate(" + i * size + ",0)";
         })
         .each(function(d) {
             x.domain([0, maxFirmCount]);
@@ -119,10 +121,11 @@ function makeChart() {
         .data(data)
         .enter().append("g")
         .attr("class", function(d) {
-            return d.center + " cell"
+            return d.center + " cell" + "resourceToInt " + resources.indexOf(d.resource)
         })
         .attr("transform", function(d) {
-            return "translate(" + d.activity * size + "," + resourceToInt(d.resource) * size + ")";
+
+            return "translate(" + resources.indexOf(d.resource) * size + "," + (d.activity - 1) * size + ")";
         })
         .each(plot);
 
