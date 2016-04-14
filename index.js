@@ -1,5 +1,6 @@
 var output;
-var data, history, weights;
+var data, weights;
+var annualHistory;
 
 $(function() {
     var margin = { top: 100, right: 20, bottom: 20, left: 80 };
@@ -14,6 +15,7 @@ $(function() {
 
     var YEAR = 2010;
     var maxFirmCount = 0;
+
 
     /** 
      * create x & y axis
@@ -50,8 +52,7 @@ $(function() {
             output = processedData(json, weights, false);
             setupSlider(output.MIN_YEAR, output.MAX_YEAR);
             data = output.data;
-            history = output.coordHistory;
-            // createChart(history);
+            annualHistory = output.coordHistory;
             updateChart(YEAR);
 
         });
@@ -142,8 +143,7 @@ $(function() {
             .attr("y", 0)
 
         circles.on("click", function(d) {
-            // chart.update(history);
-            createChart(history[d.center]);
+            createChart(annualHistory[d.center]);
         });
     }
 
@@ -383,8 +383,8 @@ $(function() {
      * @param  {ARRAY} values to plot
      * @return {null}
      */
-    function createChart(history) {
-        // var history = [1, 1]
+    function createChart(centerHistory) {
+        // var centerHistory = [1, 1]
         var margin = { top: 50, right: 20, bottom: 30, left: 600 },
             width = 960 - margin.left - margin.right,
             height = 550 - margin.top - margin.bottom;
@@ -399,11 +399,11 @@ $(function() {
 
         var x = d3.scale.linear()
             .range([0, width])
-            .domain([0 + output.MIN_YEAR, history.length + output.MIN_YEAR]);
+            .domain([0 + output.MIN_YEAR, centerHistory.length + output.MIN_YEAR]);
 
         var y = d3.scale.linear()
             .range([height, 0])
-            .domain(d3.extent(history));
+            .domain(d3.extent(centerHistory));
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -417,7 +417,7 @@ $(function() {
         svg.selectAll(".tick").remove();
 
         svg.selectAll(".point")
-            .data(history)
+            .data(centerHistory)
             .enter().append("circle")
             .attr("class", "point")
             .attr("r", 3.5)
