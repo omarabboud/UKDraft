@@ -10,16 +10,28 @@ function waitdataready(documentReady) {
         return;
     }
     processAnnualData();
+
+    // $('.ui.toggle.checkbox').checkbox('attach events', '.toggle.button');
+    $('.ui.checkbox').checkbox({
+        onChecked: function() {
+            ydomainShared(true);
+        },
+        onUnchecked: function() {
+            ydomainShared(false);
+        }
+    });
+
+    bindLeftChartHoverEffects();
 }
 
 var data = [],
     resources = ["A", "B", "C", "D", "E", "F", "G"],
-    activities = [1, 2, 3, 4];
+    activities = [1, 2, 3, 4],
+    svg, update;
 
 function processAnnualData() {
     var actGroup, resGroup, newCenter, entry,
         added = {};
-    console.log(annualHistory)
     for (center in annualHistory) {
         if (center == "MIN_YEAR" || center == "MAX_YEAR") {
             continue;
@@ -48,18 +60,21 @@ function processAnnualData() {
     for (var entry in added) {
         data.push(added[entry]);
     }
-    makeChart();
+
+    update = makeChart();
+
 }
 
+var x, y;
+
 function makeChart() {
-    var width = 1000,
-        size = 150,
+    size = 150,
         padding = 20;
 
-    var x = d3.scale.linear()
+    x = d3.scale.linear()
         .range([padding / 2, size - padding / 2]);
 
-    var y = d3.scale.linear()
+    y = d3.scale.linear()
         .range([size - padding / 2, padding / 2]);
 
     var resourceToInt = d3.scale.ordinal()
@@ -84,12 +99,11 @@ function makeChart() {
     xAxis.tickSize(size * n);
     yAxis.tickSize(-size * m);
 
-    var svg = d3.select("body").append("svg")
-        .attr("class", "scatter")
+    svg = d3.select(".scatterplot")
         .attr("width", size * m + padding)
         .attr("height", size * n + padding)
         .append("g")
-        .attr("transform", "translate(" + padding * 2 + "," + padding / 2 + ")");
+        .attr("transform", "translate(" + padding * 2 + "," + padding + ")");
 
     svg.selectAll(".x.axis.scatter")
         .data(resources)
@@ -119,14 +133,57 @@ function makeChart() {
         .data(data)
         .enter().append("g")
         .attr("class", function(d) {
-            return d.center + " cell" + "resourceToInt " + resources.indexOf(d.resource)
+            return d.center + " cell"
         })
         .attr("transform", function(d) {
             return "translate(" + resources.indexOf(d.resource) * size + "," + (d.activity - 1) * size + ")";
         })
         .each(function(d) {
             var self = d3.select(this);
-            return plot(self, d.center)
+            self.append("rect")
+                .attr("class", "frame")
+                .attr("x", padding / 2)
+                .attr("y", padding / 2)
+                .attr("width", size - padding)
+                .attr("height", size - padding).style("fill", "none");
+            self.append("text")
+                .attr("x", size / 2)
+                .attr("y", size / 2)
+                .attr("color", "black")
+                .text(function(d) {
+                    return d.center
+                });
+            var cell = self;
+            // svg.selectAll(".scatterpoint").remove();
+
+            var history, color;
+            for (var i = 0; i < data.length; i++) {
+                entry = data[i];
+                if (entry.center == d.center) {
+                    history = entry.history;
+                    color = entry.color;
+                }
+            }
+
+            x.domain([output.MIN_YEAR, output.MAX_YEAR]);
+            // just use maxFirmCount you want all of them to share the same scale
+
+            y.domain([0, Math.max.apply(Math, history)]);
+
+            cell.selectAll(".scatterpoint")
+                .data(history)
+                .enter().append("circle")
+                .attr("class", "scatterpoint")
+                .attr("cx", function(d, i) {
+                    return x(i + output.MIN_YEAR);
+                })
+                .attr("cy", function(d, i) {
+                    return y(d);
+                })
+                .attr("r", 3)
+                .style("fill", color);
+
+            // return update(self, d.center, false)
         });
 
     /**
@@ -135,49 +192,53 @@ function makeChart() {
      * @param  {STRING} center "2E", for example
      * @return {null}  
      */
-    function plot(self, center) {
+    function update(self, center, shared) {
         var cell = self;
-
-        cell.append("rect")
-            .attr("class", "frame")
-            .attr("x", padding / 2)
-            .attr("y", padding / 2)
-            .attr("width", size - padding)
-            .attr("height", size - padding).style("fill", "none");
-        cell.append("text")
-            .attr("x", size/2)
-            .attr("y", size/2)
-            .attr("color", "black")
-            .text(function() {
-                return center });
-
         var history, color;
         for (var i = 0; i < data.length; i++) {
             entry = data[i];
             if (entry.center == center) {
                 history = entry.history;
-                color = entry.color;
             }
         }
 
-        x.domain([output.MIN_YEAR, output.MAX_YEAR]);
-        // just use maxFirmCount you want all of them to share the same scale
-        y.domain([0, Math.max.apply(Math, history)]);
-
+        var domain = (shared) ? maxFirmCount : Math.max.apply(Math, history);
+        y.domain([0, domain]);
         cell.selectAll(".scatterpoint")
-            .data(history)
-            .enter().append("circle")
-            .attr("class", "scatterpoint")
-            .attr("cx", function(d, i) {
-                return x(i + output.MIN_YEAR);
-            })
+            .transition().duration(500)
             .attr("cy", function(d, i) {
                 return y(d);
             })
-            .attr("r", 3)
-            .style("fill", color);
     }
 
     d3.select(self.frameElement).style("height", size * n + padding + 20 + "px");
+
+    return update;
+
+}
+
+function ydomainShared(shared) {
+    var cell = svg.selectAll(".cell")
+
+    cell.each(function(d) {
+        var self = d3.select(this);
+        return update(self, d.center, shared)
+    });
+}
+
+function bindLeftChartHoverEffects() {
+    var circles = d3.selectAll(".dot");
+    circles.on("mouseover", function() {
+        var center = $(this).data("center");
+        var newCenter = center.charAt(0) + center.slice(-1);
+        d3.selectAll(".cell").filter(function() {
+            return !$(this).hasClass(newCenter);
+        }).transition().style("fill-opacity", 0.2)
+    })
+
+    circles.on("mouseleave", function() {
+        d3.selectAll(".cell").transition().style("fill-opacity", 1)
+
+    })
 
 }

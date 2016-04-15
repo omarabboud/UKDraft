@@ -31,10 +31,9 @@ $(function() {
         .innerTickSize(-width)
         .outerTickSize(0)
         .tickPadding(10);
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(".circle.chart")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .attr("class", "circle plot")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -43,7 +42,6 @@ $(function() {
      * @param  {JSON} json - read rson object
      * @return {error} returns error when there is one
      */
-
     d3.json("weights.json", function(error, json) {
         weights = json;
         d3.json("SIC.json", function(error, json) {
@@ -103,7 +101,7 @@ $(function() {
             .attr("y", 0 - (margin.top / 4))
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
-            .text("click on circle to visualize change");
+            // .text("click on circle to visualize change");
 
         if (title.empty()) {
             svg.append("text")
@@ -121,7 +119,10 @@ $(function() {
             .data(chartData);
 
         var circles = dots.enter().append("circle")
-            .attr("class", "enter dot circle")
+            .attr("class", "dot")
+            .attr("data-center", function(d){
+              return d.center;
+            })
             .attr('stroke', function(d) {
                 return d.color;
             }).attr("fill", function(d) {
@@ -140,10 +141,6 @@ $(function() {
                 return y(d.activity);
             })
             .attr("y", 0)
-
-        circles.on("click", function(d) {
-            createChart(annualHistory[d.center]);
-        });
     }
 
     /**
@@ -397,72 +394,6 @@ $(function() {
             }).transition().style("fill-opacity", op)
         }
 
-    }
-
-    /**
-     * @param  {ARRAY} values to plot
-     * @return {null}
-     */
-    function createChart(centerHistory) {
-        var history = centerHistory.data
-            // var centerHistory = [1, 1]
-        var margin = { top: 50, right: 20, bottom: 30, left: 600 },
-            width = 960 - margin.left - margin.right,
-            height = 550 - margin.top - margin.bottom;
-
-        var formatDate = d3.time.format("%d-%b-%y");
-
-        var svg = d3.select(".chart")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var x = d3.scale.linear()
-            .range([0, width])
-            .domain([0 + output.MIN_YEAR, history.length + output.MIN_YEAR]);
-
-        var y = d3.scale.linear()
-            .range([height, 0])
-            .domain(d3.extent(history));
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom").ticks(5);
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left").ticks(5);
-
-        d3.selectAll(".point").remove();
-        svg.selectAll(".tick").remove();
-
-        svg.selectAll(".point")
-            .data(history)
-            .enter().append("circle")
-            .attr("class", "point")
-            .attr("r", 3.5)
-            .attr("cx", function(d, i) {
-                return x(i + output.MIN_YEAR);
-            })
-            .attr("cy", function(d) {
-                return y(d)
-            })
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Firm count");
     }
 
 })

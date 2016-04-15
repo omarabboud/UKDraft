@@ -32,13 +32,13 @@
     .dot:hover {
         opacity: 1;
     }
-    
+    /*    
     .controls.container {
         position: absolute;
         left: 20px;
         top: 850px;
         width: 500px;
-    }
+    }*/
     
     .circular.label.basic {
         margin: 1px;
@@ -49,26 +49,51 @@
     }
     
     .chart {
-        /*margin-left: 600px;*/
+        top: 0;
+    }
+    
+    .scatter {
+        margin-left: 600px;
+        margin-top: 100px;
+    }
+    
+    .scatterplot,
+    .ui.grid.scatter {
+        width: 1000px;
     }
 
-    .scatter {
-      margin-left: 40%
+    .unfocused {
+      opacity: 0.4;
     }
     </style>
 
     <body>
-        <div class="controls container">
-            <div class="buttoncontainer ui segment">
-                <h4 class="ui header">Hover to highlight SIC codes</h4>
-            </div>
-            <div class="slider container">
-                <div class="ui teal range" id="slider"></div>
-                <div class="ui pointing red basic label slider value">
+        <svg class="circle chart"></svg>
+        <div class="scatter container">
+            <div class="ui grid scatter">
+                <div class="four column row">
+                    <div class="twelve wide column">
+                        <div class="controls container">
+                            <div class="buttoncontainer ui segment">
+                                <h4 class="ui header">Hover to highlight SIC codes</h4>
+                            </div>
+                            <div class="slider container">
+                                <div class="ui teal range" id="slider"></div>
+                                <div class="ui pointing red basic label slider value">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <div class="ui toggle checkbox">
+                            <label>Use shared y-axis</label>
+                            <input type="checkbox" name="public">
+                        </div>
+                    </div>
                 </div>
             </div>
+            <svg class="scatterplot"></svg>
         </div>
-        <svg class="chart"></svg>
     </body>
 
 </html>
