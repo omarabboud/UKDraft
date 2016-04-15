@@ -36,15 +36,8 @@
   .dot:hover {
     opacity: 1;
   }
-  /*    
-    .controls.container {
-        position: absolute;
-        left: 20px;
-        top: 850px;
-        width: 500px;
-    }*/
   
-  .circular.label.basic {
+  .circular.label {
     margin: 1px;
   }
   
@@ -58,7 +51,7 @@
   
   .scatter {
     margin-left: 500px;
-    margin-top: 100px;
+    margin-top: 20px;
   }
   
   .ui.grid.scatter {
@@ -73,6 +66,19 @@
   #input {
     display: none;
   }
+  
+  .ui.grid.right {
+    position: absolute;
+    right: 20px;
+    left: 1600px;
+  }
+
+  .timeslider.grid{
+    position: absolute;
+    top: 900px;
+    right: 0;
+    left: 50px;
+  }
   </style>
 
   <body>
@@ -80,35 +86,41 @@
     <div class="scatter container">
       <div class="ui grid scatter">
         <div class="four column row">
-          <div class="twelve wide column">
-            <div class="controls container">
-              <div class="buttoncontainer ui segment">
-                <h4 class="ui header">Hover to highlight SIC codes</h4>
-              </div>
-            </div>
-          </div>
-          <div class="four wide column">
+          <div class="right floated column">
             <div class="ui toggle checkbox">
               <label>Use shared y-axis</label>
               <input type="checkbox" name="public">
             </div>
           </div>
         </div>
-        <div class="row slider container">
-          <div class="twelve wide column">
-            <div class="ui teal range" id="slider"></div>
-            <input id="input"></input>
-            <div class="ui pointing red basic label slider value"></div>
-          </div>
-          <div class="four wide column">
-            <button class="ui compact play  icon button">
-              <i class="play icon"></i>
-              Animate through time
-            </button>
+        <div class="row"><svg class="scatterplot"></svg></div>
+      </div>
+      
+    </div>
+    <div class="ui grid right">
+      <div class="row">
+        <div class="right floated column">
+          <div class="controls container">
+            <div class="buttoncontainer ui segment">
+              <h4 class="ui header">Hover to highlight SIC codes</h4>
+            </div>
           </div>
         </div>
       </div>
-      <svg class="scatterplot"></svg>
+    </div>
+    <div class="ui timeslider grid">
+      <div class="row slider container">
+        <div class="twelve wide column">
+          <div class="ui teal range" id="slider"></div>
+          <input id="input"></input>
+          <div class="ui pointing red basic label slider value"></div>
+        </div>
+        <div class="four wide column">
+          <button class="ui compact play  icon button">
+            <i class="play icon"></i> Animate through time
+          </button>
+        </div>
+      </div>
     </div>
   </body>
 

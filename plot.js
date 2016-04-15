@@ -30,46 +30,55 @@ var data = [],
     svg, update;
 
 function processAnnualData() {
-    var actGroup, resGroup, newCenter, entry,
-        added = {};
-    for (center in annualHistory) {
-        if (center == "MIN_YEAR" || center == "MAX_YEAR") {
-            continue;
-        }
+    var actGroup, resGroup, newCenter, entry, added = {},
+        history;
 
-        actGroup = center.charAt(0); // first character, "2"
-        resGroup = center.slice(-1); // last character of string, "E"
-        newCenter = actGroup + resGroup; // '2E'
+    /**
+     * mutates added to aggregate activity groups, for example merging 2.2E and 2.1E into 2E
+     * @mutates {JSON} added
+     */
+    (function aggregateData() {
+        for (center in annualHistory) {
+            // don't process if it's metadata
+            if (center == "MIN_YEAR" || center == "MAX_YEAR") continue;
 
-        entry = {
-            "activity": actGroup,
-            "resource": resGroup,
-            "center": newCenter,
-            "color": annualHistory[center].color,
-            "history": annualHistory[center].data
-        }
-        if (newCenter in added) {
-            var history = added[newCenter].history;
-            for (var i = 0; i < history.length; i++) {
-                history[i] += entry.history[i]
+            actGroup = center.charAt(0); // first character, "2"
+            resGroup = center.slice(-1); // last character of string, "E"
+            newCenter = actGroup + resGroup; // '2E'
+
+            entry = {
+                "activity": actGroup,
+                "resource": resGroup,
+                "center": newCenter,
+                "color": annualHistory[center].color,
+                "history": annualHistory[center].data
             }
-        } else {
-            added[newCenter] = entry;
+            if (newCenter in added) {
+                history = added[newCenter].history;
+                for (var i = 0; i < history.length; i++) {
+                    history[i] += entry.history[i]
+                }
+            } else {
+                added[newCenter] = entry;
+            }
         }
-    }
+    })();
+
     for (var entry in added) {
         data.push(added[entry]);
     }
 
     update = makeChart();
-
 }
 
+/**
+ * [makeChart description]
+ * @return {[type]} [description]
+ */
 var x, y;
-
 function makeChart() {
     size = 150,
-        padding = 20;
+    padding = 20;
 
     x = d3.scale.linear()
         .range([padding / 2, size - padding / 2]);
@@ -100,7 +109,7 @@ function makeChart() {
     yAxis.tickSize(-size * m);
 
     svg = d3.select(".scatterplot")
-        .attr("width", size * (m-1) + 100)
+        .attr("width", size * (m - 1) + 100)
         .attr("height", size * n + 100)
         .append("g")
         .attr("transform", "translate(" + 100 + "," + padding * 2 + ")");
@@ -167,7 +176,7 @@ function makeChart() {
                 .attr("height", size - padding).style("fill", "none");
             self.append("text")
                 .attr("x", size / 2)
-                .attr("y", size / 2)
+                .attr("y", size / 2 + padding)
                 .attr("color", "black")
                 .style("opacity", 0.2)
                 .style("font-size", 30)
@@ -175,7 +184,6 @@ function makeChart() {
                     return d.center
                 });
             var cell = self;
-            // svg.selectAll(".scatterpoint").remove();
 
             var history, color;
             for (var i = 0; i < data.length; i++) {
@@ -187,7 +195,6 @@ function makeChart() {
             }
 
             x.domain([output.MIN_YEAR, output.MAX_YEAR]);
-            // just use maxFirmCount you want all of them to share the same scale
 
             y.domain([0, Math.max.apply(Math, history)]);
 

@@ -110,10 +110,15 @@ $(function() {
                 .attr("class", "chartTitle")
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
-                .text("Distribution of " + totalFirmCount + " firms");
+                .text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
         } else {
-            title.transition().text("Distribution of " + totalFirmCount + " firms");
+            title.transition().text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
         }
+
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
         svg.selectAll(".dot").remove();
         var dots = svg.selectAll(".dot")
             .data(chartData);
@@ -183,7 +188,7 @@ $(function() {
                 weight = count / weights[d.SIC].sum
 
                 var firmCount = d.firms * weight;
-                var equalWeightFirms = d.firms/activities.length;  //assumes equal weighting
+                var equalWeightFirms = d.firms / activities.length; //assumes equal weighting
 
                 var entry = {
                     "year": d.year,
@@ -191,7 +196,7 @@ $(function() {
                     "activity": activities[i].substring(0, 3),
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
-                    "equalWeightFirms" : equalWeightFirms,
+                    "equalWeightFirms": equalWeightFirms,
                     "center": center,
                     "color": SIC_DICT[d.SIC].color[0]
                 }
@@ -361,22 +366,25 @@ $(function() {
 
             function makeButtonHTML(key) {
                 var color = SIC_DICT[key].color[1];
-                var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'
+                // var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'+ key + ': ' + SIC_DICT[key].name + '</br>'
+                var HTML = '<button class="ui small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</br>'
                 return HTML
             }
 
             function makeToolTip(key) {
-                var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + SIC_DICT[key].name + '" data-variation="inverted tiny"'
+                // var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + SIC_DICT[key].name + '" data-variation="inverted tiny"'
+                var HTML = key + ': ' + SIC_DICT[key].name
                 return HTML;
             }
         };
 
-        $(".label.circular").popup({
-            inline: true,
-            position: 'top center',
-        });
+        // $(".label.circular").popup({
+        //     inline: true,
+        //     position: 'top center',
+        // });
 
         $(".circular.label").on("mouseenter", function() {
+            console.log("hi")
             var active = !$(this).hasClass("selected");
             if (active) transitionCircle($(this), 1);
         }).on("mouseleave", function() {
