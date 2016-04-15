@@ -169,6 +169,8 @@ function makeChart() {
                 .attr("x", size / 2)
                 .attr("y", size / 2)
                 .attr("color", "black")
+                .style("opacity", 0.2)
+                .style("font-size", 30)
                 .text(function(d) {
                     return d.center
                 });
