@@ -1,25 +1,85 @@
-$(function() {
-    /**
-     * wait for data to be calculated and made available to this file
-     */
-    waitdataready();
+/**
+ * wait for data to be calculated and made available to this file
+ */
 
-    function waitdataready() {
-        if (data == null) {
-            setTimeout(waitdataready, 500);
-            return;
+waitdataready();
+
+function waitdataready(documentReady) {
+    if (annualHistory == null) {
+        setTimeout(waitdataready, 500);
+        return;
+    }
+    processAnnualData();
+
+    // $('.ui.toggle.checkbox').checkbox('attach events', '.toggle.button');
+    $('.ui.checkbox').checkbox({
+        onChecked: function() {
+            ydomainShared(true);
+        },
+        onUnchecked: function() {
+            ydomainShared(false);
+        }
+    });
+
+    bindLeftChartHoverEffects();
+}
+
+var data = [],
+    resources = ["A", "B", "C", "D", "E", "F", "G"],
+    activities = [1, 2, 3, 4],
+    svg, update;
+
+function processAnnualData() {
+    var actGroup, resGroup, newCenter, entry,
+        added = {};
+    for (center in annualHistory) {
+        if (center == "MIN_YEAR" || center == "MAX_YEAR") {
+            continue;
+        }
+
+        actGroup = center.charAt(0); // first character, "2"
+        resGroup = center.slice(-1); // last character of string, "E"
+        newCenter = actGroup + resGroup; // '2E'
+
+        entry = {
+            "activity": actGroup,
+            "resource": resGroup,
+            "center": newCenter,
+            "color": annualHistory[center].color,
+            "history": annualHistory[center].data
+        }
+        if (newCenter in added) {
+            var history = added[newCenter].history;
+            for (var i = 0; i < history.length; i++) {
+                history[i] += entry.history[i]
+            }
+        } else {
+            added[newCenter] = entry;
         }
     }
+    for (var entry in added) {
+        data.push(added[entry]);
+    }
 
-    var width = 960,
-        size = 150,
-        padding = 19.5;
+    update = makeChart();
 
-    var x = d3.scale.linear()
+}
+
+var x, y;
+
+function makeChart() {
+    size = 150,
+        padding = 20;
+
+    x = d3.scale.linear()
         .range([padding / 2, size - padding / 2]);
 
-    var y = d3.scale.linear()
+    y = d3.scale.linear()
         .range([size - padding / 2, padding / 2]);
+
+    var resourceToInt = d3.scale.ordinal()
+        .domain(resources)
+        .range([0, 6])
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -33,116 +93,152 @@ $(function() {
 
     var color = d3.scale.category10();
 
-    var domainByTrait = {};
-    var traits = d3.keys(data[0]).filter(function(d) {
-        return d !== "species";
-    });
-
-    var n = traits.length;
-
-    traits.forEach(function(trait) {
-        domainByTrait[trait] = d3.extent(data, function(d) {
-            return d[trait];
-        });
-    });
+    var m = resources.length;
+    var n = activities.length;
 
     xAxis.tickSize(size * n);
-    yAxis.tickSize(-size * n);
+    yAxis.tickSize(-size * m);
 
-    var svg = d3.select("body").append("svg")
-        .attr("class", "scatter")
-        .attr("width", size * n + padding)
+    svg = d3.select(".scatterplot")
+        .attr("width", size * m + padding)
         .attr("height", size * n + padding)
         .append("g")
-        .attr("transform", "translate(" + padding + "," + padding / 2 + ")");
+        .attr("transform", "translate(" + padding * 2 + "," + padding + ")");
 
     svg.selectAll(".x.axis.scatter")
-        .data(traits)
+        .data(resources)
         .enter().append("g")
         .attr("class", "x axis scatter")
         .attr("transform", function(d, i) {
-            return "translate(" + (n - i - 1) * size + ",0)";
+            return "translate(" + i * size + ",0)";
         })
         .each(function(d) {
-            x.domain(domainByTrait[d]);
+            x.domain([output.MIN_YEAR, output.MAX_YEAR]);
             d3.select(this).call(xAxis);
         });
 
     svg.selectAll(".y.axis.scatter")
-        .data(traits)
+        .data(activities)
         .enter().append("g")
         .attr("class", "y axis scatter")
         .attr("transform", function(d, i) {
             return "translate(0," + i * size + ")";
         })
         .each(function(d) {
-            y.domain(domainByTrait[d]);
+            y.domain([0, maxFirmCount]);
             d3.select(this).call(yAxis);
         });
 
-    var cells = svg.selectAll(".cell")
-        .data(cross(traits, traits))
+    var cell = svg.selectAll(".cell")
+        .data(data)
         .enter().append("g")
-        .attr("class", "cell")
-        .attr("transform", function(d) {
-            return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")";
+        .attr("class", function(d) {
+            return d.center + " cell"
         })
-        .each(plot);
+        .attr("transform", function(d) {
+            return "translate(" + resources.indexOf(d.resource) * size + "," + (d.activity - 1) * size + ")";
+        })
+        .each(function(d) {
+            var self = d3.select(this);
+            self.append("rect")
+                .attr("class", "frame")
+                .attr("x", padding / 2)
+                .attr("y", padding / 2)
+                .attr("width", size - padding)
+                .attr("height", size - padding).style("fill", "none");
+            self.append("text")
+                .attr("x", size / 2)
+                .attr("y", size / 2)
+                .attr("color", "black")
+                .text(function(d) {
+                    return d.center
+                });
+            var cell = self;
+            // svg.selectAll(".scatterpoint").remove();
 
-    // Titles for the diagonal.
-    cells.filter(function(d) {
-            return d.i === d.j;
-        }).append("text")
-        .attr("x", padding)
-        .attr("y", padding)
-        .attr("dy", ".71em")
-        .text(function(d) {
-            return d.x;
+            var history, color;
+            for (var i = 0; i < data.length; i++) {
+                entry = data[i];
+                if (entry.center == d.center) {
+                    history = entry.history;
+                    color = entry.color;
+                }
+            }
+
+            x.domain([output.MIN_YEAR, output.MAX_YEAR]);
+            // just use maxFirmCount you want all of them to share the same scale
+
+            y.domain([0, Math.max.apply(Math, history)]);
+
+            cell.selectAll(".scatterpoint")
+                .data(history)
+                .enter().append("circle")
+                .attr("class", "scatterpoint")
+                .attr("cx", function(d, i) {
+                    return x(i + output.MIN_YEAR);
+                })
+                .attr("cy", function(d, i) {
+                    return y(d);
+                })
+                .attr("r", 3)
+                .style("fill", color);
+
+            // return update(self, d.center, false)
         });
 
-    function plot(p) {
-        var cell = d3.select(this);
-
-        x.domain(domainByTrait[p.x]);
-        y.domain(domainByTrait[p.y]);
-
-        cell.append("rect")
-            .attr("class", "frame")
-            .attr("x", padding / 2)
-            .attr("y", padding / 2)
-            .attr("width", size - padding)
-            .attr("height", size - padding);
-
-        cell.selectAll(".scatterpoint")
-            .data(data)
-            .enter().append("circle")
-            .attr("class", "scatterpoint")
-            .attr("cx", function(d) {
-                return 1;
-            })
-            .attr("cy", function(d) {
-                return 1;
-            })
-            .attr("r", 3)
-            .style("fill", function(d, i) {
-                return color(i);
-            });
-    }
-
-    function cross(a, b) {
-        var c = [],
-            n = a.length,
-            m = b.length,
-            i, j;
-        for (i = -1; i < n; i++) {
-            for (j = -1; j < m; j++) {
-                c.push({ x: a[i], i: i, y: b[j], j: j });
+    /**
+     * creates individual scatterplots
+     * @param  {DOM element} self   cell element
+     * @param  {STRING} center "2E", for example
+     * @return {null}  
+     */
+    function update(self, center, shared) {
+        var cell = self;
+        var history, color;
+        for (var i = 0; i < data.length; i++) {
+            entry = data[i];
+            if (entry.center == center) {
+                history = entry.history;
             }
         }
 
-        return c;
+        var domain = (shared) ? maxFirmCount : Math.max.apply(Math, history);
+        y.domain([0, domain]);
+        cell.selectAll(".scatterpoint")
+            .transition().duration(500)
+            .attr("cy", function(d, i) {
+                return y(d);
+            })
     }
 
     d3.select(self.frameElement).style("height", size * n + padding + 20 + "px");
 
-})
+    return update;
+
+}
+
+function ydomainShared(shared) {
+    var cell = svg.selectAll(".cell")
+
+    cell.each(function(d) {
+        var self = d3.select(this);
+        return update(self, d.center, shared)
+    });
+}
+
+function bindLeftChartHoverEffects() {
+    var circles = d3.selectAll(".dot");
+    circles.on("mouseover", function() {
+        var center = $(this).data("center");
+        var newCenter = center.charAt(0) + center.slice(-1);
+        d3.selectAll(".cell").filter(function() {
+            return !$(this).hasClass(newCenter);
+        }).transition().style("fill-opacity", 0.2)
+    })
+
+    circles.on("mouseleave", function() {
+        d3.selectAll(".cell").transition().style("fill-opacity", 1)
+
+    })
+
+}
