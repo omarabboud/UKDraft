@@ -92,7 +92,7 @@ $(function() {
         });
         var totalFirmCount = 0;
         chartData.forEach(function(d, i) {
-            totalFirmCount += d.firms;
+            totalFirmCount += d.equalWeightFirms;
         });
         totalFirmCount = ~~(totalFirmCount);
 
@@ -120,8 +120,8 @@ $(function() {
 
         var circles = dots.enter().append("circle")
             .attr("class", "dot")
-            .attr("data-center", function(d){
-              return d.center;
+            .attr("data-center", function(d) {
+                return d.center;
             })
             .attr('stroke', function(d) {
                 return d.color;
@@ -169,19 +169,21 @@ $(function() {
             var resources = d.resource.replace(/\s+/g, '').split(",");
             output.MIN_YEAR = Math.min(output.MIN_YEAR, d.year);
             output.MAX_YEAR = Math.max(output.MAX_YEAR, d.year);
-            var activity, resource, center, weight, count;
+            var activity, resource, center, weight, count, sum;
 
             for (var i = 0; i < activities.length; i++) {
                 activity = activities[i].substring(0, 3)
                 resource = resources[i].charAt(0);
                 center = activity + resource;
                 count = weights[d.SIC][center];
+                sum = weights[d.SIC].sum;
                 if (isNaN(count)) { // count was not in the random sampling
                     count = 1;
                 }
                 weight = count / weights[d.SIC].sum
 
                 var firmCount = d.firms * weight;
+                var equalWeightFirms = d.firms/activities.length;  //assumes equal weighting
 
                 var entry = {
                     "year": d.year,
@@ -189,6 +191,7 @@ $(function() {
                     "activity": activities[i].substring(0, 3),
                     "resource": resources[i].charAt(0),
                     "firms": firmCount,
+                    "equalWeightFirms" : equalWeightFirms,
                     "center": center,
                     "color": SIC_DICT[d.SIC].color[0]
                 }
@@ -278,6 +281,7 @@ $(function() {
             min: min,
             max: max,
             start: YEAR,
+            input: '#input',
             onChange: function(val) {
                 if (val != YEAR) {
                     YEAR = val;
@@ -288,46 +292,61 @@ $(function() {
                 $(".circular.label").removeClass("selected").addClass("basic")
             }
         });
+        var thumb = $(".thumb");
+        var fill = $(".track-fill");
+        var value = $(".slider.value");
         $(".slider.value").css({ left: $(".thumb").position().left })
+
+        // Draggable.create(".thumb", {type:"x", bounds:".track", throwProps:true});
+        $(".play.icon").on("click", function() {
+            var start = output.MIN_YEAR;
+            var tt = new TimelineLite();
+            var tf = new TimelineLite();
+            var tv = new TimelineLite();
+            tt.to(thumb, 0.5, {
+                left: "0px",
+                onStart: function() {
+                    $(".circular.label").removeClass("selected").addClass("basic")
+                },
+                onUpdate: function() {
+                    var left = thumb.position().left
+                    updateSlider(left);
+                    // TweenLite.to(value, 0.1, {text:left, ease:Linear.easeNone});
+
+                }
+            })
+            tf.to(fill, 0.5, { width: "0px" })
+            tv.to(value, 0.5, { left: "0px" })
+
+            tt.to(thumb, 3, {
+                left: "100%",
+                onUpdate: function() {
+                    var left = thumb.position().left
+                    updateSlider(left);
+                }
+            })
+            tf.to(fill, 3, { width: "100%" })
+            tv.to(value, 3, { left: "95%" })
+        })
+
+        function updateSlider(val) {
+            var year = ~~(val / $(".track").width() * (output.MAX_YEAR - output.MIN_YEAR) + output.MIN_YEAR)
+            value.html(year)
+            YEAR = year;
+            updateChart(YEAR);
+        }
     };
 
     SIC_DICT = {
-        "7": {
-            "color": ["#db2828", "red"],
-            "name": "agriculture, forestry, fishing"
-        },
-        "10": {
-            "color": ["#f2711c", "orange"],
-            "name": "mining"
-        },
-        "15": {
-            "color": ["#fbbd08", "yellow"],
-            "name": "construction"
-        },
-        "20": {
-            "color": ["#b5cc18", "olive"],
-            "name": "manufacturing"
-        },
-        "40": {
-            "color": ["#21ba45", "green"],
-            "name": "transportation & public utilities"
-        },
-        "50": {
-            "color": ["#00b5ad", "teal"],
-            "name": "wholesale trade"
-        },
-        "52": {
-            "color": ["#2185d0", "blue"],
-            "name": "retail trade"
-        },
-        "60": {
-            "color": ["#a333c8", "purple"],
-            "name": "finance, insurance, real estate"
-        },
-        "70": {
-            "color": ["#e03997", "pink"],
-            "name": "services"
-        }
+        "7": { "color": ["#db2828", "red"], "name": "agriculture, forestry, fishing" },
+        "10": { "color": ["#f2711c", "orange"], "name": "mining" },
+        "15": { "color": ["#fbbd08", "yellow"], "name": "construction" },
+        "20": { "color": ["#b5cc18", "olive"], "name": "manufacturing" },
+        "40": { "color": ["#21ba45", "green"], "name": "transportation & public utilities" },
+        "50": { "color": ["#00b5ad", "teal"], "name": "wholesale trade" },
+        "52": { "color": ["#2185d0", "blue"], "name": "retail trade" },
+        "60": { "color": ["#a333c8", "purple"], "name": "finance, insurance, real estate" },
+        "70": { "color": ["#e03997", "pink"], "name": "services" }
     }
 
     setUpLabels();
