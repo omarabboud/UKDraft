@@ -84,12 +84,12 @@ function makeChart() {
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(5);
+        .ticks(4);
 
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(5);
+        .ticks(4);
 
     var color = d3.scale.category10();
 
@@ -100,10 +100,10 @@ function makeChart() {
     yAxis.tickSize(-size * m);
 
     svg = d3.select(".scatterplot")
-        .attr("width", size * m + padding)
-        .attr("height", size * n + padding)
+        .attr("width", size * (m-1) + 100)
+        .attr("height", size * n + 100)
         .append("g")
-        .attr("transform", "translate(" + padding * 2 + "," + padding + ")");
+        .attr("transform", "translate(" + 100 + "," + padding * 2 + ")");
 
     svg.selectAll(".x.axis.scatter")
         .data(resources)
@@ -129,6 +129,25 @@ function makeChart() {
             d3.select(this).call(yAxis);
         });
 
+    (function addOuterAxisLabels() {
+        for (var i = 0; i < activities.length; i++) {
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate(" + -80 + "," + (size * i + size / 2) + ")")
+                .text(activities[i])
+                .style("font-size", "16px")
+                .style("font-weight", "bold");
+        }
+
+        for (var i = 0; i < resources.length; i++) {
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate(" + (size * i + size / 2) + "," + -20 + ")")
+                .text(resources[i])
+                .style("font-size", "16px")
+        }
+    })();
+
     var cell = svg.selectAll(".cell")
         .data(data)
         .enter().append("g")
@@ -150,6 +169,8 @@ function makeChart() {
                 .attr("x", size / 2)
                 .attr("y", size / 2)
                 .attr("color", "black")
+                .style("opacity", 0.2)
+                .style("font-size", 30)
                 .text(function(d) {
                     return d.center
                 });
@@ -182,7 +203,6 @@ function makeChart() {
                 })
                 .attr("r", 3)
                 .style("fill", color);
-
             // return update(self, d.center, false)
         });
 
