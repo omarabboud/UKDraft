@@ -174,6 +174,8 @@ function makeChart() {
             drawPlotForCell(cell, d);
         });
 
+    hoverValueDisplay();
+
     /**
      * [drawPlotForCell] plots individual scatterplots inside a given cell and its data
      * @param  {DOM element} cell - element to draw in
@@ -261,9 +263,6 @@ function ydomainShared(shared) {
         $(".axis + .y.axis.scatter g text").css("display", "block");
     }
     var cell = svg.selectAll(".cell")
-        // Update the Axis
-        // xAxis = d3.svg.axis().scale(x).orient("bottom");
-
     cell.each(function(d) {
         var self = d3.select(this);
         return update(self, d.center, shared)
@@ -285,4 +284,14 @@ function bindLeftChartHoverEffects() {
 
     })
 
+}
+
+function hoverValueDisplay() {
+    d3.selectAll(".scatterpoint").each(function(d) {
+        $(this).popup({
+            content: ~~(d),
+            variation: "inverted tiny",
+            position: "top center"
+        });
+    })
 }
