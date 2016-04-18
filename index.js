@@ -339,6 +339,7 @@ $(function() {
             value.html(year)
             YEAR = year;
             updateChart(YEAR);
+            highlightScatter(YEAR);
         }
     };
 
@@ -393,7 +394,7 @@ $(function() {
         }).on("click", function() {
             $(this).toggleClass("selected");
             transitionCircle($(this), 1);
-        })
+        });
 
         function handleLabelClick(elm) {
             if (elm.hasClass("selected")) {
@@ -421,6 +422,16 @@ $(function() {
             }).transition().style("fill-opacity", op)
         }
 
+    }
+
+    function highlightScatter(year) {
+        var index = year - output.MIN_YEAR;
+        d3.selectAll(".cell").each(function() {
+            var self = d3.select(this);
+            self.selectAll(".scatterpoint").filter(function(d, i) {
+                return i === index;
+            }).transition().attr("r", 5).transition().attr("r", 3)
+        });
     }
 
 })
