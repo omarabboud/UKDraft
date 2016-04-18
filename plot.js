@@ -75,10 +75,10 @@ function processAnnualData() {
  * [makeChart description]
  * @return {[type]} [description]
  */
-var x, y;
+
 function makeChart() {
     size = 150,
-    padding = 20;
+        padding = 20;
 
     x = d3.scale.linear()
         .range([padding / 2, size - padding / 2]);
@@ -90,12 +90,12 @@ function makeChart() {
         .domain(resources)
         .range([0, 6])
 
-    var xAxis = d3.svg.axis()
+    xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
         .ticks(4);
 
-    var yAxis = d3.svg.axis()
+    yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
         .ticks(4);
@@ -246,9 +246,14 @@ function makeChart() {
 
 function ydomainShared(shared) {
     var cell = svg.selectAll(".cell")
+        // Update the Axis
+        // xAxis = d3.svg.axis().scale(x).orient("bottom");
 
     cell.each(function(d) {
         var self = d3.select(this);
+        // yAxis = d3.svg.axis().scale(y).orient("left").ticks(4);;
+
+        // svg.selectAll("g.y.axis").call(yAxis)
         return update(self, d.center, shared)
     });
 }

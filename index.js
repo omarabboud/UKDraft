@@ -379,18 +379,13 @@ $(function() {
             }
         };
 
-        // $(".label.circular").popup({
-        //     inline: true,
-        //     position: 'top center',
-        // });
-
         $(".circular.label").on("mouseenter", function() {
-            console.log("hi")
             var active = !$(this).hasClass("selected");
             if (active) transitionCircle($(this), 1);
         }).on("mouseleave", function() {
             var active = !$(this).hasClass("selected");
             if (active) transitionCircle($(this), 0);
+            d3.selectAll(".cell").transition().style("fill-opacity", 1)
         }).on("click", function() {
             $(this).toggleClass("selected");
             transitionCircle($(this), 1);
@@ -413,12 +408,21 @@ $(function() {
             };
             var sic = elm.data("key");
             if (op == 1) {
-                elm.removeClass("basic")
+                elm.removeClass("basic");
             } else {
                 elm.addClass("basic");
             }
             d3.selectAll(".dot").filter(function(d) {
                 return (d.SIC.indexOf(sic) != -1)
+            }).each(function(d) {
+                var center = $(this).data("center");
+                var newCenter = center.charAt(0) + center.slice(-1);
+
+                // console.log(graphOP)
+                d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
+                d3.selectAll(".cell").filter(function(d) {
+                    return (d.center == newCenter)
+                }).transition().style("fill-opacity", 1)
             }).transition().style("fill-opacity", op)
         }
 
@@ -428,9 +432,10 @@ $(function() {
         var index = year - output.MIN_YEAR;
         d3.selectAll(".cell").each(function() {
             var self = d3.select(this);
-            self.selectAll(".scatterpoint").filter(function(d, i) {
-                return i === index;
-            }).transition().attr("r", 5).transition().attr("r", 3)
+            self.selectAll(".scatterpoint")
+                .filter(function(d, i) {
+                    return i === index;
+                }).transition().attr("r", 5).transition().attr("r", 3)
         });
     }
 
