@@ -2,8 +2,21 @@ var annualHistory, output;
 var SIC_DICT;
 var maxFirmCount = 0;
 
+SIC_DICT = {
+    "7": { "color": ["#db2828", "red"], "name": "agriculture, forestry, fishing" },
+    "10": { "color": ["#f2711c", "orange"], "name": "mining" },
+    "15": { "color": ["#fbbd08", "yellow"], "name": "construction" },
+    "20": { "color": ["#b5cc18", "olive"], "name": "manufacturing" },
+    "40": { "color": ["#21ba45", "green"], "name": "transportation & public utilities" },
+    "50": { "color": ["#00b5ad", "teal"], "name": "wholesale trade" },
+    "52": { "color": ["#2185d0", "blue"], "name": "retail trade" },
+    "60": { "color": ["#a333c8", "purple"], "name": "finance, insurance, real estate" },
+    "70": { "color": ["#e03997", "pink"], "name": "services" }
+}
+
+// whole script is wrapped in document.ready
 $(function() {
-    var data, weights;
+    var data, weights, YEAR = 2010; // initial slider year
     var margin = { top: 100, right: 20, bottom: 20, left: 80 };
     var width = 500 - margin.left - margin.right;
 
@@ -13,29 +26,6 @@ $(function() {
     var x = Scale.x,
         y = Scale.y,
         r = Scale.r;
-
-    var YEAR = 2010;
-
-    /** 
-     * create x & y axis
-     */
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("top")
-        .innerTickSize(-height)
-        .outerTickSize(0)
-        .tickPadding(10);
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .innerTickSize(-width)
-        .outerTickSize(0)
-        .tickPadding(10);
-    var svg = d3.select(".circle.chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     /**
      * @param  {error} error handler in callback
@@ -51,39 +41,64 @@ $(function() {
             data = output.data;
             annualHistory = output.coordHistory;
             updateChart(YEAR);
-
         });
     });
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + 10 + ")")
-        .call(xAxis)
-        .append("text")
-        .attr("class", "label")
-        .attr("y", -10)
-        .attr("transform", "rotate(-90) translate(0,40)")
-        .style("text-anchor", "beginning")
-        .text("Resource");
+    var svg = d3.select(".circle.chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("g").attr("class", "y axis").call(yAxis)
-        .append("text")
-        .attr("class", "label")
-        .attr("y", -10)
-        .attr("transform", "translate(0,30)")
-        .style("text-anchor", "end")
-        .text("Activity");
+    /**
+     * [createAxis] creates x y axis and labels
+     * @return {null}
+     */
+    var xAxis, yAxis;
+    (function createAxis() {
+        xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("top")
+            .innerTickSize(-height)
+            .outerTickSize(0)
+            .tickPadding(10);
+        yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .innerTickSize(-width)
+            .outerTickSize(0)
+            .tickPadding(10);
 
-    svg.selectAll("text.label")
-        .style("font-size", "16px")
-        .style("font-weight", "bold");
-    svg.selectAll(".tick > text")
-        .style("font-size", "12px");
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + 10 + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("y", -10)
+            .attr("transform", "rotate(-90) translate(0,40)")
+            .style("text-anchor", "beginning")
+            .text("Resource");
+
+        svg.append("g").attr("class", "y axis").call(yAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("y", -10)
+            .attr("transform", "translate(0,30)")
+            .style("text-anchor", "end")
+            .text("Activity");
+
+        svg.selectAll("text.label")
+            .style("font-size", "16px")
+            .style("font-weight", "bold");
+        svg.selectAll(".tick > text")
+            .style("font-size", "12px");
+
+    })();
 
     /**
      * manipulates charts to update circle size and chart title
-     * http://www.census.gov/ces/dataproducts/bds/data_firm.html
-     * sector
+     * http://www.census.gov/ces/dataproducts/bds/data_firm.html > sector
      * @param  {int} YEAR: represents a year between 1997 and 2013
      */
     function updateChart(YEAR) {
@@ -274,6 +289,7 @@ $(function() {
     }
 
     /**
+     * [setupSlider] creates a slider with listeners inside the #slider div
      * @param  {int} min - minimum value of slider, 1977 in this case
      * @param  {int} max - maximum, 2013 in this case
      * @mutator manimupates the DOM and attaches listener to slider changes
@@ -302,7 +318,6 @@ $(function() {
         var value = $(".slider.value");
         $(".slider.value").css({ left: $(".thumb").position().left })
 
-        // Draggable.create(".thumb", {type:"x", bounds:".track", throwProps:true});
         $(".play.icon").on("click", function() {
             var start = output.MIN_YEAR;
             var tt = new TimelineLite();
@@ -316,8 +331,6 @@ $(function() {
                 onUpdate: function() {
                     var left = thumb.position().left
                     updateSlider(left);
-                    // TweenLite.to(value, 0.1, {text:left, ease:Linear.easeNone});
-
                 }
             })
             tf.to(fill, 0.5, { width: "0px" })
@@ -342,18 +355,6 @@ $(function() {
             highlightScatter(YEAR);
         }
     };
-
-    SIC_DICT = {
-        "7": { "color": ["#db2828", "red"], "name": "agriculture, forestry, fishing" },
-        "10": { "color": ["#f2711c", "orange"], "name": "mining" },
-        "15": { "color": ["#fbbd08", "yellow"], "name": "construction" },
-        "20": { "color": ["#b5cc18", "olive"], "name": "manufacturing" },
-        "40": { "color": ["#21ba45", "green"], "name": "transportation & public utilities" },
-        "50": { "color": ["#00b5ad", "teal"], "name": "wholesale trade" },
-        "52": { "color": ["#2185d0", "blue"], "name": "retail trade" },
-        "60": { "color": ["#a333c8", "purple"], "name": "finance, insurance, real estate" },
-        "70": { "color": ["#e03997", "pink"], "name": "services" }
-    }
 
     setUpLabels();
 
@@ -396,6 +397,7 @@ $(function() {
                 transitionCircle(elm, 1);
             }
         }
+
         /**
          * @param  {DOM object} label clicked
          * @param  {int} 0 or 1, represents desired opacity of circle fill
@@ -415,10 +417,11 @@ $(function() {
             d3.selectAll(".dot").filter(function(d) {
                 return (d.SIC.indexOf(sic) != -1)
             }).each(function(d) {
+                /**
+                 * select scatterplots at that SIC code and highlight those
+                 */
                 var center = $(this).data("center");
                 var newCenter = center.charAt(0) + center.slice(-1);
-
-                // console.log(graphOP)
                 d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
                 d3.selectAll(".cell").filter(function(d) {
                     return (d.center == newCenter)

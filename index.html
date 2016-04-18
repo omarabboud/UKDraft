@@ -2,17 +2,17 @@
 <html lang="jp">
 
 <head>
+  <link rel="stylesheet" href="libs/range.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="libs/range.js"></script>
-  <link rel="stylesheet" href="libs/range.css">
   <title>city plot</title>
   <meta charset="utf-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenLite.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TimelineLite.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/utils/Draggable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/plugins/CSSPlugin.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
   <script src="index.js" defer></script>
   <script src="plot.js" defer></script>
@@ -79,6 +79,10 @@
     right: 0;
     left: 50px;
   }
+  
+/*  .axis + .y.axis g text {
+    display: none;
+  }*/
   </style>
 
   <body>
@@ -111,9 +115,8 @@
     </div>
     <div class="ui timeslider grid">
       <div class="row slider container">
-        <div class="twelve wide column">
+        <div class="eleven wide column">
           <div class="ui teal range" id="slider"></div>
-          <input id="input"></input>
           <div class="ui pointing red basic label slider value"></div>
         </div>
         <div class="four wide column">

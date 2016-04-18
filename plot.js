@@ -10,8 +10,6 @@ function waitdataready(documentReady) {
         return;
     }
     processAnnualData();
-
-    // $('.ui.toggle.checkbox').checkbox('attach events', '.toggle.button');
     $('.ui.checkbox').checkbox({
         onChecked: function() {
             ydomainShared(true);
@@ -20,7 +18,7 @@ function waitdataready(documentReady) {
             ydomainShared(false);
         }
     });
-
+    ydomainShared(false);
     bindLeftChartHoverEffects();
 }
 
@@ -28,14 +26,17 @@ var data = [],
     resources = ["A", "B", "C", "D", "E", "F", "G"],
     activities = [1, 2, 3, 4],
     svg, update;
-
+/**
+ * [processAnnualData] process history data to create data attached to each center
+ * @return {null} mutates the update function and 
+ */
 function processAnnualData() {
     var actGroup, resGroup, newCenter, entry, added = {},
         history;
 
     /**
      * mutates added to aggregate activity groups, for example merging 2.2E and 2.1E into 2E
-     * @mutates {JSON} added
+     * @mutates {JSON} "added" collects the aggregated data
      */
     (function aggregateData() {
         for (center in annualHistory) {
@@ -45,18 +46,27 @@ function processAnnualData() {
             actGroup = center.charAt(0); // first character, "2"
             resGroup = center.slice(-1); // last character of string, "E"
             newCenter = actGroup + resGroup; // '2E'
-
+            // console.log(annualHistory[center].data[0])
             entry = {
                 "activity": actGroup,
                 "resource": resGroup,
                 "center": newCenter,
                 "color": annualHistory[center].color,
+                "colorFirmCount": annualHistory[center].data[0],
                 "history": annualHistory[center].data
             }
             if (newCenter in added) {
                 history = added[newCenter].history;
                 for (var i = 0; i < history.length; i++) {
                     history[i] += entry.history[i]
+                }
+                /**
+                 * uses 1977 data, the scatterplot line color is set to the color of the largest subgroup
+                 * 1977 data is a good enough approximation
+                 */
+                if (entry.colorFirmCount > added[newCenter].colorFirmCount) {
+                    added[newCenter].colorFirmCount = entry.colorFirmCount;
+                    added[newCenter].color = entry.color;
                 }
             } else {
                 added[newCenter] = entry;
@@ -67,76 +77,69 @@ function processAnnualData() {
     for (var entry in added) {
         data.push(added[entry]);
     }
-
     update = makeChart();
 }
 
 /**
- * [makeChart description]
- * @return {[type]} [description]
+ * [makeChart] main function for creating the scatterplot
+ * @return {FUNCTION} update, see documentation for update
  */
+var size, padding, x, y, xAxis, yAxis, svg;
 
 function makeChart() {
-    size = 150,
-        padding = 20;
-
-    x = d3.scale.linear()
-        .range([padding / 2, size - padding / 2]);
-
-    y = d3.scale.linear()
-        .range([size - padding / 2, padding / 2]);
-
-    var resourceToInt = d3.scale.ordinal()
-        .domain(resources)
-        .range([0, 6])
-
-    xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(4);
-
-    yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(4);
-
-    var color = d3.scale.category10();
-
+    size = 150, padding = 20;
     var m = resources.length;
     var n = activities.length;
-
-    xAxis.tickSize(size * n);
-    yAxis.tickSize(-size * m);
-
     svg = d3.select(".scatterplot")
         .attr("width", size * (m - 1) + 100)
         .attr("height", size * n + 100)
         .append("g")
         .attr("transform", "translate(" + 100 + "," + padding * 2 + ")");
 
-    svg.selectAll(".x.axis.scatter")
-        .data(resources)
-        .enter().append("g")
-        .attr("class", "x axis scatter")
-        .attr("transform", function(d, i) {
-            return "translate(" + i * size + ",0)";
-        })
-        .each(function(d) {
-            x.domain([output.MIN_YEAR, output.MAX_YEAR]);
-            d3.select(this).call(xAxis);
-        });
+    (function makeAxis() {
+        x = d3.scale.linear()
+            .range([padding / 2, size - padding / 2]);
 
-    svg.selectAll(".y.axis.scatter")
-        .data(activities)
-        .enter().append("g")
-        .attr("class", "y axis scatter")
-        .attr("transform", function(d, i) {
-            return "translate(0," + i * size + ")";
-        })
-        .each(function(d) {
-            y.domain([0, maxFirmCount]);
-            d3.select(this).call(yAxis);
-        });
+        y = d3.scale.linear()
+            .range([size - padding / 2, padding / 2]);
+
+        xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .ticks(4);
+
+        yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(4);
+
+        xAxis.tickSize(size * n);
+        yAxis.tickSize(-size * m);
+
+        svg.selectAll(".x.axis.scatter")
+            .data(resources)
+            .enter().append("g")
+            .attr("class", "x axis scatter")
+            .attr("transform", function(d, i) {
+                return "translate(" + i * size + ",0)";
+            })
+            .each(function(d) {
+                x.domain([output.MIN_YEAR, output.MAX_YEAR]);
+                d3.select(this).call(xAxis);
+            });
+
+        svg.selectAll(".y.axis.scatter")
+            .data(activities)
+            .enter().append("g")
+            .attr("class", "y axis scatter")
+            .attr("transform", function(d, i) {
+                return "translate(0," + i * size + ")";
+            })
+            .each(function(d) {
+                y.domain([0, maxFirmCount]);
+                d3.select(this).call(yAxis);
+            });
+    })();
 
     (function addOuterAxisLabels() {
         for (var i = 0; i < activities.length; i++) {
@@ -167,51 +170,57 @@ function makeChart() {
             return "translate(" + resources.indexOf(d.resource) * size + "," + (d.activity - 1) * size + ")";
         })
         .each(function(d) {
-            var self = d3.select(this);
-            self.append("rect")
-                .attr("class", "frame")
-                .attr("x", padding / 2)
-                .attr("y", padding / 2)
-                .attr("width", size - padding)
-                .attr("height", size - padding).style("fill", "none");
-            self.append("text")
-                .attr("x", size / 2)
-                .attr("y", size / 2 + padding)
-                .attr("color", "black")
-                .style("opacity", 0.2)
-                .style("font-size", 30)
-                .text(function(d) {
-                    return d.center
-                });
-            var cell = self;
-
-            var history, color;
-            for (var i = 0; i < data.length; i++) {
-                entry = data[i];
-                if (entry.center == d.center) {
-                    history = entry.history;
-                    color = entry.color;
-                }
-            }
-
-            x.domain([output.MIN_YEAR, output.MAX_YEAR]);
-
-            y.domain([0, Math.max.apply(Math, history)]);
-
-            cell.selectAll(".scatterpoint")
-                .data(history)
-                .enter().append("circle")
-                .attr("class", "scatterpoint")
-                .attr("cx", function(d, i) {
-                    return x(i + output.MIN_YEAR);
-                })
-                .attr("cy", function(d, i) {
-                    return y(d);
-                })
-                .attr("r", 3)
-                .style("fill", color);
-            // return update(self, d.center, false)
+            var cell = d3.select(this);
+            drawPlotForCell(cell, d);
         });
+
+    /**
+     * [drawPlotForCell] plots individual scatterplots inside a given cell and its data
+     * @param  {DOM element} cell - element to draw in
+     * @param  {JSON} d           - data bound to the cell
+     */
+    function drawPlotForCell(cell, d) {
+        cell.append("rect")
+            .attr("class", "frame")
+            .attr("x", padding / 2)
+            .attr("y", padding / 2)
+            .attr("width", size - padding)
+            .attr("height", size - padding).style("fill", "none");
+        cell.append("text")
+            .attr("x", size / 2)
+            .attr("y", size / 2 + padding)
+            .attr("color", "black")
+            .style("opacity", 0.2)
+            .style("font-size", 30)
+            .text(function(d) {
+                return d.center
+            });
+        // var cell = self;
+
+        var history, color;
+        for (var i = 0; i < data.length; i++) {
+            entry = data[i];
+            if (entry.center == d.center) {
+                history = entry.history;
+                color = entry.color;
+            }
+        }
+        x.domain([output.MIN_YEAR, output.MAX_YEAR]);
+        y.domain([0, Math.max.apply(Math, history)]);
+
+        cell.selectAll(".scatterpoint")
+            .data(history)
+            .enter().append("circle")
+            .attr("class", "scatterpoint")
+            .attr("cx", function(d, i) {
+                return x(i + output.MIN_YEAR);
+            })
+            .attr("cy", function(d, i) {
+                return y(d);
+            })
+            .attr("r", 3)
+            .style("fill", color);
+    }
 
     /**
      * creates individual scatterplots
@@ -245,15 +254,18 @@ function makeChart() {
 }
 
 function ydomainShared(shared) {
+    if (shared == false) {
+        $(".axis + .y.axis.scatter g text").css("display", "none");
+        // console.log("here")
+    } else {
+        $(".axis + .y.axis.scatter g text").css("display", "block");
+    }
     var cell = svg.selectAll(".cell")
         // Update the Axis
         // xAxis = d3.svg.axis().scale(x).orient("bottom");
 
     cell.each(function(d) {
         var self = d3.select(this);
-        // yAxis = d3.svg.axis().scale(y).orient("left").ticks(4);;
-
-        // svg.selectAll("g.y.axis").call(yAxis)
         return update(self, d.center, shared)
     });
 }
