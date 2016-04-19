@@ -316,10 +316,11 @@ $(function() {
         var thumb = $(".thumb");
         var fill = $(".track-fill");
         var value = $(".slider.value");
-        $(".slider.value").css({ left: $(".thumb").position().left })
+        value.css({ left: $(".thumb").position().left })
+        var start = output.MIN_YEAR;
+        var labelLeftMax = $(".track").width()-$(".slider.label").width()/2;
 
         $(".play.icon").on("click", function() {
-            var start = output.MIN_YEAR;
             var tt = new TimelineLite();
             var tf = new TimelineLite();
             var tv = new TimelineLite();
@@ -342,9 +343,9 @@ $(function() {
                     var left = thumb.position().left
                     updateSlider(left);
                 }
-            })
+            });
             tf.to(fill, 3, { width: "100%" })
-            tv.to(value, 3, { left: "95%" })
+            tv.to(value, 3, { left: labelLeftMax+"px" })
         })
 
         function updateSlider(val) {
