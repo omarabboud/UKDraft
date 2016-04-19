@@ -19,6 +19,7 @@ function waitdataready(documentReady) {
         }
     });
     ydomainShared(false);
+
     bindLeftChartHoverEffects();
 }
 
@@ -270,18 +271,17 @@ function ydomainShared(shared) {
 }
 
 function bindLeftChartHoverEffects() {
-    var circles = d3.selectAll(".dot");
-    circles.on("mouseover", function() {
+    // var circles = d3.selectAll(".dot");
+    $('.circle.chart').on('mouseover', '.dot', function() {
         var center = $(this).data("center");
         var newCenter = center.charAt(0) + center.slice(-1);
         d3.selectAll(".cell").filter(function() {
             return !$(this).hasClass(newCenter);
         }).transition().style("fill-opacity", 0.2)
-    })
+    });
 
-    circles.on("mouseleave", function() {
+    $('.circle.chart').on('mouseleave', '.dot', function() {
         d3.selectAll(".cell").transition().style("fill-opacity", 1)
-
     })
 
 }
