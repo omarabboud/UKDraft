@@ -100,10 +100,10 @@ $(function() {
             .text("Activity");
 
         svg.selectAll("text.label")
-            .style("font-size", "16px")
+            .style("font-size", "20px")
             .style("font-weight", "bold");
         svg.selectAll(".tick > text")
-            .style("font-size", "12px");
+            .style("font-size", "16px");
 
     })();
 
@@ -135,7 +135,7 @@ $(function() {
                 .attr("y", 0 - (margin.top / 2))
                 .attr("class", "chartTitle")
                 .attr("text-anchor", "middle")
-                .style("font-size", "16px")
+                .style("font-size", "20px")
                 .text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
         } else {
             title.transition().text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
