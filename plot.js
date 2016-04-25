@@ -75,9 +75,10 @@ function processAnnualData() {
             }
         }
     })();
-
+    maxFirmCount = 0;
     for (var entry in added) {
         data.push(added[entry]);
+        maxFirmCount = Math.max(maxFirmCount, Math.max(...added[entry].history))
     }
     update = makeChart();
 }
@@ -228,6 +229,7 @@ function makeChart() {
                 return x(i + output.MIN_YEAR);
             })
             .attr("cy", function(d, i) {
+
                 return y(d);
             })
             .attr("r", 3)
@@ -255,6 +257,7 @@ function makeChart() {
         cell.selectAll(".scatterpoint")
             .transition().duration(500)
             .attr("cy", function(d, i) {
+              // console.log(d, y(d))
                 return y(d);
             })
     }

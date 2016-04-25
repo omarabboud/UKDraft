@@ -209,7 +209,7 @@ $(function() {
                 count = weights[d.SIC][center];
                 sum = weights[d.SIC].sum;
                 if (isNaN(count)) { // count was not in the random sampling
-                    count = .01;
+                    count = 1;
                 }
 
                 weight = count / weights[d.SIC].sum
