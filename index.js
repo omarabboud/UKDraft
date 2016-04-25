@@ -17,11 +17,21 @@ SIC_DICT = {
 // whole script is wrapped in document.ready
 $(function() {
     var data, weights, YEAR = 2010; // initial slider year
-    var margin = { top: 100, right: 20, bottom: 20, left: 80 };
-    var width = 500 - margin.left - margin.right;
+    var margin = { top: 80, right: 20, bottom: 20, left: 80 };
+    // var width = $(window).width() * 0.30;
 
     // calculate height to keep grid items square
+    // var height = width * 12 / 7;
+    // var maxHeight = $(window).height() * 0.80;
+    var width = $(window).width() * 0.3;
+
+    // var width = Math.min(maxHeight * 7 / 12, maxWidth);
     var height = width * 12 / 7;
+
+    // console.log(width, height)
+
+    $(".timeslider.grid").css("margin-top", height - margin.top - margin.bottom);
+
     var Scale = makeScales();
     var x = Scale.x,
         y = Scale.y,
@@ -32,8 +42,9 @@ $(function() {
      * @param  {JSON} json - read rson object
      * @return {error} returns error when there is one
      */
-    d3.json("weights.json", function(error, json) {
+    d3.json("weights-large.json", function(error, json) {
         weights = json;
+        // console.log(weights)
         d3.json("SIC.json", function(error, json) {
             if (error) return error;
             output = processedData(json, weights, false);
@@ -45,10 +56,10 @@ $(function() {
     });
 
     var svg = d3.select(".circle.chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", width - margin.left - margin.right)
+        .attr("height", height - margin.top - margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ") ");
 
     /**
      * [createAxis] creates x y axis and labels
@@ -198,8 +209,9 @@ $(function() {
                 count = weights[d.SIC][center];
                 sum = weights[d.SIC].sum;
                 if (isNaN(count)) { // count was not in the random sampling
-                    count = 1;
+                    count = .01;
                 }
+
                 weight = count / weights[d.SIC].sum
 
                 var firmCount = d.firms * weight;
@@ -318,7 +330,7 @@ $(function() {
         var value = $(".slider.value");
         value.css({ left: $(".thumb").position().left })
         var start = output.MIN_YEAR;
-        var labelLeftMax = $(".track").width()-$(".slider.label").width()/2;
+        var labelLeftMax = $(".track").width() - $(".slider.label").width() / 2;
 
         $(".play.icon").on("click", function() {
             var tt = new TimelineLite();
@@ -327,7 +339,7 @@ $(function() {
             tt.to(thumb, 0.5, {
                 left: "0px",
                 onStart: function() {
-                    $(".circular.label").removeClass("selected").addClass("basic")
+                    $(".circular.label").removeClass("selected").addClass("basic");
                 },
                 onUpdate: function() {
                     var left = thumb.position().left
@@ -345,7 +357,7 @@ $(function() {
                 }
             });
             tf.to(fill, 3, { width: "100%" })
-            tv.to(value, 3, { left: labelLeftMax+"px" })
+            tv.to(value, 3, { left: labelLeftMax + "px" })
         })
 
         function updateSlider(val) {
@@ -389,9 +401,31 @@ $(function() {
             if (active) transitionCircle($(this), 0);
             d3.selectAll(".cell").transition().style("fill-opacity", 1)
         }).on("click", function() {
+            var checkbox = $('.ui.checkbox.sic');
+            if (checkbox.hasClass("checked")) {
+                $('.ui.checkbox.sic').checkbox("uncheck")
+                $(".circular.label").each(function() {
+                    transitionCircle($(this), 1);
+                })
+            }
             $(this).toggleClass("selected");
             transitionCircle($(this), 1);
         });
+
+        $('.ui.checkbox.sic').checkbox({
+            onChecked: function() {
+                $(".circular.label").each(function() {
+                    $(this).addClass("selected");
+                    transitionCircle($(this), 1);
+                })
+            },
+            onUnchecked: function() {
+                $(this).removeClass("selected");
+                $(".circular.label").each(function() {
+                    transitionCircle($(this), 0);
+                })
+            }
+        })
 
         function handleLabelClick(elm) {
             if (elm.hasClass("selected")) {

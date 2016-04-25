@@ -50,13 +50,9 @@
   }
   
   .scatter {
-    margin-left: 500px;
-    margin-top: 20px;
-  }
-  
-  .ui.grid.scatter {
-    width: 1000px;
-    margin-left: 20px;
+    position: absolute;
+    /*margin-left: 25vw;*/
+    /*margin-top: 20px;*/
   }
   
   .unfocused {
@@ -70,44 +66,50 @@
   .ui.grid.right {
     position: absolute;
     right: 20px;
-    left: 1600px;
+    top: 30%;
+    transform: translateY(-30%);
+    /*left: 1600px;*/
   }
   
   .timeslider.grid {
     position: absolute;
-    top: 800px;
+    /*top: 800px;*/
+    /*bottom: 100px;*/
     right: 0;
     left: 50px;
   }
-  
-/*  .axis + .y.axis g text {
+  /*  .axis + .y.axis g text {
     display: none;
   }*/
   </style>
 
   <body>
-    <svg class="circle chart"></svg>
+    <svg  viewBox="0 0 700 1200" class="circle chart"></svg>
     <div class="scatter container">
       <div class="ui grid scatter">
         <div class="four column row">
           <div class="right floated column">
-            <div class="ui toggle checkbox">
-              <label>Use shared y-axis</label>
-              <input type="checkbox" name="public">
-            </div>
           </div>
         </div>
-        <div class="row">
-          <svg class="scatterplot"></svg>
-        </div>
+        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 800" class="scatterplot"></svg>
       </div>
     </div>
     <div class="ui grid right">
       <div class="row">
         <div class="right floated column">
+          <div class="ui toggle checkbox axis">
+            <label>Use shared y-axis</label>
+            <input type="checkbox" name="public">
+          </div>
+          <div class="ui hidden divider"></div>
+          <div class="ui toggle checkbox sic">
+            <label>Highlight all</label>
+            <input type="checkbox" name="public">
+          </div>
+          <div class="ui hidden divider"></div>
           <div class="controls container">
             <div class="buttoncontainer ui segment">
-              <h4 class="ui header">Hover to highlight SIC codes</h4>
+              <h4 class="ui header">Hover to highlight</h4>
             </div>
           </div>
         </div>

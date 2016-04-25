@@ -10,7 +10,7 @@ function waitdataready(documentReady) {
         return;
     }
     processAnnualData();
-    $('.ui.checkbox').checkbox({
+    $('.ui.checkbox.axis').checkbox({
         onChecked: function() {
             ydomainShared(true);
         },
@@ -19,6 +19,7 @@ function waitdataready(documentReady) {
         }
     });
     ydomainShared(false);
+
 
     bindLeftChartHoverEffects();
 }
@@ -88,14 +89,22 @@ function processAnnualData() {
 var size, padding, x, y, xAxis, yAxis, svg;
 
 function makeChart() {
-    size = 150, padding = 20;
+    // size = 150;
+    padding = 20;
     var m = resources.length;
     var n = activities.length;
+    // var offset = $(window).width()*0.3;
+
+    // size = Math.min($(window).width() * 0.5 / 6, $(window).height() * 0.8 / 4);
+    size = ($(window).width() - $(".circle.chart").width() - $(".right.floated.column").width())/8;
+
     svg = d3.select(".scatterplot")
-        .attr("width", size * (m - 1) + 100)
-        .attr("height", size * n + 100)
+        .attr("width", size * (m - 1))
+        .attr("height", size * n)
         .append("g")
-        .attr("transform", "translate(" + 100 + "," + padding * 2 + ")");
+        .attr("transform", "translate(" + padding + ", " + padding * 5 + ")");
+
+    $(".scatterplot").css("margin-left", $(".circle.chart").width());
 
     (function makeAxis() {
         x = d3.scale.linear()
@@ -146,7 +155,7 @@ function makeChart() {
         for (var i = 0; i < activities.length; i++) {
             svg.append("text")
                 .attr("text-anchor", "middle")
-                .attr("transform", "translate(" + -80 + "," + (size * i + size / 2) + ")")
+                .attr("transform", "translate(" + -60 + "," + (size * i + size / 2) + ")")
                 .text(activities[i])
                 .style("font-size", "16px")
                 .style("font-weight", "bold");
