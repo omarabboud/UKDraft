@@ -416,13 +416,13 @@ $(function() {
             onChecked: function() {
                 $(".circular.label").each(function() {
                     $(this).addClass("selected");
-                    transitionCircle($(this), 1);
+                    transitionCircle($(this), 1, true);
                 })
             },
             onUnchecked: function() {
                 $(this).removeClass("selected");
                 $(".circular.label").each(function() {
-                    transitionCircle($(this), 0);
+                    transitionCircle($(this), 0, true);
                 })
             }
         })
@@ -438,7 +438,8 @@ $(function() {
          * @param  {int} 0 or 1, represents desired opacity of circle fill
          * @mutator mutates the DOM
          */
-        function transitionCircle(elm, op) {
+        function transitionCircle(elm, op, checkboxMode) {
+            if (typeof checkboxMode === 'undefined') { checkboxMode = false; }
             var active = !$(this).hasClass("selected");
             if (!active) {
                 elm.toggleClass("basic");
@@ -455,12 +456,14 @@ $(function() {
                 /**
                  * select scatterplots at that SIC code and highlight those
                  */
-                var center = $(this).data("center");
-                var newCenter = center.charAt(0) + center.slice(-1);
-                d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
-                d3.selectAll(".cell").filter(function(d) {
-                    return (d.center == newCenter)
-                }).transition().style("fill-opacity", 1)
+                if (!checkboxMode) {
+                    var center = $(this).data("center");
+                    var newCenter = center.charAt(0) + center.slice(-1);
+                    d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
+                    d3.selectAll(".cell").filter(function(d) {
+                        return (d.center == newCenter)
+                    }).transition().style("fill-opacity", 1)
+                }
             }).transition().style("fill-opacity", op)
         }
 
