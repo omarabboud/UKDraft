@@ -78,13 +78,27 @@
     right: 0;
     left: 50px;
   }
+  
+  .ui-slider-tick-mark {
+    display: inline-block;
+    width: 2px;
+    background: black;
+    height: 12px;
+    position: absolute;
+    top: -4px;
+  }
+  
+  .ui.grid.minmaxlabels {
+    width: 105%;
+    margin-left: -2.5%;
+  }
   /*  .axis + .y.axis g text {
     display: none;
   }*/
   </style>
 
   <body>
-    <svg  viewBox="0 0 700 1200" class="circle chart"></svg>
+    <svg viewBox="0 0 700 1200" class="circle chart"></svg>
     <div class="scatter container">
       <div class="ui grid scatter">
         <div class="four column row">
@@ -118,10 +132,24 @@
     <div class="ui timeslider grid">
       <div class="row slider container">
         <div class="eleven wide column">
-          <div class="ui teal range" id="slider"></div>
+          <!-- <div class="row labels"> -->
+          <div class="ui grid minmaxlabels">
+            <div class="left floated column">
+              <div class="ui pointing below label"> 1977 </div>
+            </div>
+            <div class="centered one wide column">
+              <div class="ui pointing below label"> 1995 </div>
+            </div>
+            <div class="right floated column">
+              <div class="ui pointing below label"> 2013 </div>
+            </div>
+          </div>
+          <!-- </div> -->
+          <div class="ui teal range" id="slider">
+          </div>
           <div class="ui pointing red basic label slider value"></div>
         </div>
-        <div class="four wide column">
+        <div class="four wide right floated column">
           <button class="ui compact play  icon button">
             <i class="play icon"></i> Animate through time
           </button>

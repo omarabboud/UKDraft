@@ -136,9 +136,9 @@ $(function() {
                 .attr("class", "chartTitle")
                 .attr("text-anchor", "middle")
                 .style("font-size", "20px")
-                .text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
+                .text("Distribution of " + numberWithCommas(totalFirmCount) + " firms in " + YEAR);
         } else {
-            title.transition().text("Distribution of " + numberWithCommas(totalFirmCount) + " firms");
+            title.transition().text("Distribution of " + numberWithCommas(totalFirmCount) + " firms in " + YEAR);
         }
 
         function numberWithCommas(x) {
@@ -158,8 +158,7 @@ $(function() {
                 return d.color;
             }).attr("fill", function(d) {
                 return d.color
-            }).attr("fill-opacity", 0
-            )
+            }).attr("fill-opacity", 0)
             // .attr("fill-opacity", 0);
 
         circles.transition()
@@ -318,7 +317,7 @@ $(function() {
             input: '#input',
             onChange: function(val) {
                 if (val != YEAR) {
-                    YEAR = val;
+                    YEAR = ~~(val);
                     updateChart(YEAR);
                     $(".slider.value").html(val);
                     $(".slider.value").css({ left: $(".thumb").position().left - $(".thumb").width() / 2 })
@@ -333,6 +332,7 @@ $(function() {
             // var start = output.MIN_YEAR;
 
         var labelLeftMax = $(".track").width() - $(".slider.label").width() / 2;
+        makeSliderTicks(min, max);
 
         $(".play.icon").on("click", function() {
             var tt = new TimelineLite();
@@ -370,6 +370,16 @@ $(function() {
             highlightScatter(YEAR);
         }
     };
+
+    function makeSliderTicks(min, max) {
+        var slider = $(".track")
+        var spacing = 100 / (max - min);
+
+        for (var i = 0; i < max - min; i++) {
+            $('<span class="ui-slider-tick-mark"></span>').css('left', (spacing * i) + '%').appendTo(slider);
+        }
+
+    }
 
     setUpLabels();
 
