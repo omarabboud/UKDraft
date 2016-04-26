@@ -483,9 +483,10 @@ $(function() {
                         return (d.center == newCenter)
                     })
                     cells.transition().style("fill-opacity", 1)
+                    var mode = (op == 1) ? "show" : "hide";
+                    toggleMinMidMax(mode, newCenter);
                 }
-                var mode = (op == 1) ? "show" : "hide";
-                toggleMinMidMax(mode, newCenter);
+
             }).transition().style("fill-opacity", op)
         }
 
