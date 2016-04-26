@@ -283,30 +283,37 @@ function ydomainShared(shared) {
 
 function bindLeftChartHoverEffects() {
     // var circles = d3.selectAll(".dot");
-    var dataLength = output.MAX_YEAR - output.MIN_YEAR;
+
     $('.circle.chart').on('mouseover', '.dot', function() {
         var center = $(this).data("center");
         var newCenter = center.charAt(0) + center.slice(-1);
         d3.selectAll(".cell").filter(function() {
             return !$(this).hasClass(newCenter);
         }).transition().style("fill-opacity", 0.2)
-
-        d3.selectAll(".cell").filter(function() {
-            return $(this).hasClass(newCenter);
-        }).selectAll(".scatterpoint").each(function(d, i) {
-            console.log(d)
-            if (i == 0 || i == dataLength / 2 || i == dataLength) {
-                $(this).popup("show");
-            }
-
-        });
+        toggleMinMidMax("show", newCenter)
     });
 
     $('.circle.chart').on('mouseleave', '.dot', function() {
         d3.selectAll(".cell").transition().style("fill-opacity", 1)
-        $(".scatterpoint").popup("hide");
+        toggleMinMidMax("hide")
     })
 
+}
+
+function toggleMinMidMax(mode, newCenter) {
+    if (mode == "show") {
+        var dataLength = output.MAX_YEAR - output.MIN_YEAR;
+        d3.selectAll(".cell").filter(function() {
+            return $(this).hasClass(newCenter);
+        }).selectAll(".scatterpoint").each(function(d, i) {
+            if (i == 0 || i == dataLength / 2 || i == dataLength) {
+                $(this).popup("show");
+            }
+        });
+    }
+    if (mode == "hide") {
+        $(".scatterpoint").popup("hide");
+    }
 }
 
 function hoverValueDisplay() {

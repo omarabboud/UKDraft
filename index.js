@@ -448,7 +448,6 @@ $(function() {
                 transitionCircle(elm, 1);
             }
         }
-
         /**
          * @param  {DOM object} label clicked
          * @param  {int} 0 or 1, represents desired opacity of circle fill
@@ -456,6 +455,7 @@ $(function() {
          * @mutator mutates the DOM
          */
         function transitionCircle(elm, op, checkboxMode) {
+
             if (typeof checkboxMode === 'undefined') { checkboxMode = false; }
             var active = !$(this).hasClass("selected");
             if (!active) {
@@ -470,6 +470,8 @@ $(function() {
             d3.selectAll(".dot").filter(function(d) {
                 return (d.SIC.indexOf(sic) != -1)
             }).each(function(d) {
+                var cells;
+
                 /**
                  * select scatterplots at that SIC code and highlight those
                  */
@@ -477,10 +479,13 @@ $(function() {
                     var center = $(this).data("center");
                     var newCenter = center.charAt(0) + center.slice(-1);
                     d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
-                    d3.selectAll(".cell").filter(function(d) {
+                    cells = d3.selectAll(".cell").filter(function(d) {
                         return (d.center == newCenter)
-                    }).transition().style("fill-opacity", 1)
+                    })
+                    cells.transition().style("fill-opacity", 1)
                 }
+                var mode = (op == 1) ? "show" : "hide";
+                toggleMinMidMax(mode, newCenter);
             }).transition().style("fill-opacity", op)
         }
 
