@@ -20,7 +20,6 @@ function waitdataready(documentReady) {
     });
     ydomainShared(false);
 
-
     bindLeftChartHoverEffects();
 }
 
@@ -97,7 +96,7 @@ function makeChart() {
     // var offset = $(window).width()*0.3;
 
     // size = Math.min($(window).width() * 0.5 / 6, $(window).height() * 0.8 / 4);
-    size = ($(window).width() - $(".circle.chart").width() - $(".right.floated.column").width())/8;
+    size = ($(window).width() - $(".circle.chart").width() - $(".right.floated.column").width()) / 8;
 
     svg = d3.select(".scatterplot")
         .attr("width", size * (m - 1))
@@ -257,7 +256,7 @@ function makeChart() {
         cell.selectAll(".scatterpoint")
             .transition().duration(500)
             .attr("cy", function(d, i) {
-              // console.log(d, y(d))
+                // console.log(d, y(d))
                 return y(d);
             })
     }
@@ -284,16 +283,28 @@ function ydomainShared(shared) {
 
 function bindLeftChartHoverEffects() {
     // var circles = d3.selectAll(".dot");
+    var dataLength = output.MAX_YEAR - output.MIN_YEAR;
     $('.circle.chart').on('mouseover', '.dot', function() {
         var center = $(this).data("center");
         var newCenter = center.charAt(0) + center.slice(-1);
         d3.selectAll(".cell").filter(function() {
             return !$(this).hasClass(newCenter);
         }).transition().style("fill-opacity", 0.2)
+
+        d3.selectAll(".cell").filter(function() {
+            return $(this).hasClass(newCenter);
+        }).selectAll(".scatterpoint").each(function(d, i) {
+            console.log(d)
+            if (i == 0 || i == dataLength / 2 || i == dataLength) {
+                $(this).popup("show");
+            }
+
+        });
     });
 
     $('.circle.chart').on('mouseleave', '.dot', function() {
         d3.selectAll(".cell").transition().style("fill-opacity", 1)
+        $(".scatterpoint").popup("hide");
     })
 
 }
@@ -303,7 +314,9 @@ function hoverValueDisplay() {
         $(this).popup({
             content: numberWithCommas(~~(d)),
             variation: "inverted tiny",
-            position: "top center"
+            position: "top center",
+            // inline: "true",
+            hoverable: "true"
         });
     })
 }
