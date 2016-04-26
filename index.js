@@ -158,8 +158,9 @@ $(function() {
                 return d.color;
             }).attr("fill", function(d) {
                 return d.color
-            })
-            .attr("fill-opacity", 0);
+            }).attr("fill-opacity", 0
+            )
+            // .attr("fill-opacity", 0);
 
         circles.transition()
             .attr("r", function(d) {
@@ -329,7 +330,8 @@ $(function() {
         var fill = $(".track-fill");
         var value = $(".slider.value");
         value.css({ left: $(".thumb").position().left })
-        var start = output.MIN_YEAR;
+            // var start = output.MIN_YEAR;
+
         var labelLeftMax = $(".track").width() - $(".slider.label").width() / 2;
 
         $(".play.icon").on("click", function() {
@@ -339,15 +341,15 @@ $(function() {
             tt.to(thumb, 0.5, {
                 left: "0px",
                 onStart: function() {
-                    $(".circular.label").removeClass("selected").addClass("basic");
+                    // $(".circular.label").removeClass("selected").addClass("basic");
                 },
                 onUpdate: function() {
                     var left = thumb.position().left
                     updateSlider(left);
                 }
-            })
-            tf.to(fill, 0.5, { width: "0px" })
-            tv.to(value, 0.5, { left: "0px" })
+            });
+            tf.to(fill, 0.5, { width: "0px" });
+            tv.to(value, 0.5, { left: "0px" });
 
             tt.to(thumb, 3, {
                 left: "100%",
@@ -356,8 +358,8 @@ $(function() {
                     updateSlider(left);
                 }
             });
-            tf.to(fill, 3, { width: "100%" })
-            tv.to(value, 3, { left: labelLeftMax + "px" })
+            tf.to(fill, 3, { width: "100%" });
+            tv.to(value, 3, { left: labelLeftMax + "px" });
         })
 
         function updateSlider(val) {
@@ -382,7 +384,7 @@ $(function() {
             function makeButtonHTML(key) {
                 var color = SIC_DICT[key].color[1];
                 // var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'+ key + ': ' + SIC_DICT[key].name + '</br>'
-                var HTML = '<button class="ui small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</br>'
+                var HTML = '<div class="item"><button class="ui horizontal small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</div>'
                 return HTML
             }
 
