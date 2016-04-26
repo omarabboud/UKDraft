@@ -141,10 +141,6 @@ $(function() {
             title.transition().text("Distribution of " + numberWithCommas(totalFirmCount) + " firms in " + YEAR);
         }
 
-        function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
         svg.selectAll(".dot").remove();
         var dots = svg.selectAll(".dot")
             .data(chartData);
@@ -322,12 +318,13 @@ $(function() {
             input: '#input',
             onChange: function(val) {
                 if (val != YEAR) {
-                    YEAR = ~~(val);
+                    YEAR = val;
                     updateChart(YEAR);
                     highlightScatter(YEAR);
-                    $(".slider.value").html(val);
-                    $(".slider.value").css({ left: $(".thumb").position().left - $(".thumb").width() / 2 })
                 }
+                $(".slider.value").html(val);
+                $(".slider.value").css({ left: $(".thumb").position().left - $(".thumb").width() / 2 })
+
                 $(".circular.label").removeClass("selected").addClass("basic")
             }
         });
@@ -501,3 +498,7 @@ $(function() {
     }
 
 })
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

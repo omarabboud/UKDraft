@@ -79,6 +79,14 @@
     left: 50px;
   }
   
+  .label.timeline.min {
+    transform: translateX(-40%);
+  }
+    .label.timeline.max {
+    /*transform: translateX(40%);*/
+  }
+
+
   .ui-slider-tick-mark {
     display: inline-block;
     width: 2px;
@@ -87,11 +95,10 @@
     position: absolute;
     top: -4px;
   }
-  
-  .ui.grid.minmaxlabels {
+  /*  .ui.grid.minmaxlabels {
     width: 105%;
     margin-left: -2.5%;
-  }
+  }*/
   /*  .axis + .y.axis g text {
     display: none;
   }*/
@@ -134,14 +141,14 @@
         <div class="eleven wide column">
           <!-- <div class="row labels"> -->
           <div class="ui grid minmaxlabels">
-            <div class="left floated column">
-              <div class="ui pointing below label"> 1977 </div>
+            <div class="left floated three wide column">
+              <div class="ui pointing below label timeline min"> 1977 </div>
             </div>
-            <div class="centered one wide column">
-              <div class="ui pointing below label"> 1995 </div>
+            <div class="centered three wide column">
+              <div class="ui pointing below label timeline mid"> 1995 </div>
             </div>
             <div class="right floated column">
-              <div class="ui pointing below label"> 2013 </div>
+              <div class="ui pointing below label timeline max"> 2013 </div>
             </div>
           </div>
           <!-- </div> -->

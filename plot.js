@@ -301,7 +301,7 @@ function bindLeftChartHoverEffects() {
 function hoverValueDisplay() {
     d3.selectAll(".scatterpoint").each(function(d) {
         $(this).popup({
-            content: ~~(d),
+            content: numberWithCommas(~~(d)),
             variation: "inverted tiny",
             position: "top center"
         });
