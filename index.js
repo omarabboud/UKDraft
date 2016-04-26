@@ -158,8 +158,13 @@ $(function() {
                 return d.color;
             }).attr("fill", function(d) {
                 return d.color
-            }).attr("fill-opacity", 0)
-            // .attr("fill-opacity", 0);
+            })
+
+        if (allHighlighted) {
+            circles.attr("fill-opacity", 1);
+        } else {
+            circles.attr("fill-opacity", 0);
+        }
 
         circles.transition()
             .attr("r", function(d) {
@@ -319,6 +324,7 @@ $(function() {
                 if (val != YEAR) {
                     YEAR = ~~(val);
                     updateChart(YEAR);
+                    highlightScatter(YEAR);
                     $(".slider.value").html(val);
                     $(".slider.value").css({ left: $(".thumb").position().left - $(".thumb").width() / 2 })
                 }
@@ -381,6 +387,7 @@ $(function() {
 
     }
 
+    var allHighlighted;
     setUpLabels();
 
     /**
@@ -393,13 +400,11 @@ $(function() {
 
             function makeButtonHTML(key) {
                 var color = SIC_DICT[key].color[1];
-                // var HTML = '<button class="ui small circular basic ' + color + ' label" ' + makeToolTip(key) + ' ></button>'+ key + ': ' + SIC_DICT[key].name + '</br>'
                 var HTML = '<div class="item"><button class="ui horizontal small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</div>'
                 return HTML
             }
 
             function makeToolTip(key) {
-                // var HTML = 'data-key="' + key + '" data-content="' + key + ': ' + SIC_DICT[key].name + '" data-variation="inverted tiny"'
                 var HTML = key + ': ' + SIC_DICT[key].name
                 return HTML;
             }
@@ -428,12 +433,14 @@ $(function() {
             onChecked: function() {
                 $(".circular.label").each(function() {
                     $(this).addClass("selected");
+                    allHighlighted = true;
                     transitionCircle($(this), 1, true);
                 })
             },
             onUnchecked: function() {
                 $(this).removeClass("selected");
                 $(".circular.label").each(function() {
+                    allHighlighted = false;
                     transitionCircle($(this), 0, true);
                 })
             }
@@ -448,6 +455,7 @@ $(function() {
         /**
          * @param  {DOM object} label clicked
          * @param  {int} 0 or 1, represents desired opacity of circle fill
+         * @param [checkboxMode] {bool} if true, do not modify opacity of scatterplots
          * @mutator mutates the DOM
          */
         function transitionCircle(elm, op, checkboxMode) {
