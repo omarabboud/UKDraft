@@ -55,11 +55,7 @@ for item in table:
         if counts[key] == 0:
             counts[key] = int(avg);
 
-
-
-
 pprint(table)
-
 
 def printlist(a, b):
     out = []
