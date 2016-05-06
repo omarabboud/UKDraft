@@ -21,7 +21,6 @@ var margin = { top: 100, right: 20, bottom: 20, left: 80 };
 var height = $(window).height() * 0.9;
 var width = height * 7 / 12;
 
-
 var Scale = makeScales();
 var x = Scale.x,
     y = Scale.y,
@@ -45,13 +44,23 @@ var x = Scale.x,
 //     });
 // });
 
+var chartOuterWidth = width + margin.left + margin.right;
 var svg = d3.select(".circle.chart")
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", chartOuterWidth)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ") ");
 
 updateChart();
+
+$(".scatter.container").css("margin-left", chartOuterWidth);
+$(".scatter.container").css("margin-top", margin.bottom);
+$(".map").css("width", ($(window).width() - chartOuterWidth - margin.right) + "px");
+$(".map").css("height", $(window).height() - margin.bottom * 2);
+
+$("iframe").load(function() {
+  $('iframe').contents().find('#mapHeader').hide();
+})
 
 /**
  * [createAxis] creates x y axis and labels
@@ -167,7 +176,6 @@ function updateChart() {
 
     circles.transition()
         .attr("r", function(d) {
-            console.log(r(d.firms))
             return r(d.firms)
         })
         .attr("cx", function(d) {

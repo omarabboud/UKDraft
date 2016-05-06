@@ -16,6 +16,7 @@
     <style>
     body {
         font: 10px "avenir", sans-serif;
+        overflow: hidden;
     }
     
     .axis path,
@@ -46,10 +47,8 @@
         top: 0;
     }
     
-    .scatter {
-        position: absolute;
-        /*margin-left: 25vw;*/
-        /*margin-top: 20px;*/
+    #mapHeader{
+      display: none;
     }
     
     .unfocused {
@@ -65,13 +64,8 @@
 <body>
     <svg viewBox="0 0 700 1200" class="circle chart"></svg>
     <div class="scatter container">
-        <div class="ui grid scatter">
-            <div class="four column row">
-                <div class="right floated column">
-                </div>
-            </div>
-            <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 800" class="scatterplot"></svg>
-        </div>
+        <iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.easymapmaker.com/map/jumpstart" />
+        </iframe>
     </div>
 </body>
 
