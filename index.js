@@ -58,9 +58,6 @@ $(".scatter.container").css("margin-top", margin.bottom);
 $(".map").css("width", ($(window).width() - chartOuterWidth - margin.right) + "px");
 $(".map").css("height", $(window).height() - margin.bottom * 2);
 
-$("iframe").load(function() {
-  $('iframe').contents().find('#mapHeader').hide();
-})
 
 /**
  * [createAxis] creates x y axis and labels
