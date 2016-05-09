@@ -52,7 +52,7 @@ var xAxis, yAxis;
         "1.3": "Store",
         "2.1": "Design",
         "2.2": "Produce",
-        "2.3": "Test",
+        "2.3": "Assess",
         "3.1": "Sell",
         "3.2": "Exchange",
         "3.3": "Store",
@@ -209,7 +209,7 @@ function updateChart() {
 
     d3.selectAll(".dot").each(function(d) {
         $(this).popup({
-            content: d.firms + " firms at " + LOCI_TO_ENGLISH[d.center] + ", or " + CENTER_ENG_DICT[d.center].join(", "),
+            content: d.firms + " firms " + LOCI_TO_ENGLISH[d.center] + ", or " + CENTER_ENG_DICT[d.center].join(", "),
             variation: "inverted tiny",
             position: "top left",
             hoverable: "true"
