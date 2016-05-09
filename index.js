@@ -14,35 +14,17 @@ LOCI_TO_ENGLISH = {
 
 // whole script is wrapped in document.ready
 var data, weights, YEAR = 2010; // initial slider year
-var margin = { top: 100, right: 20, bottom: 20, left: 80 };
+var margin = { top: 180, right: 20, bottom: 20, left: 120 };
 // var width = $(window).width() * 0.30;
 
 // calculate height to keep grid items square
-var height = $(window).height() * 0.9;
+var height = $(window).height() * 0.8;
 var width = height * 7 / 12;
 
 var Scale = makeScales();
 var x = Scale.x,
     y = Scale.y,
     r = Scale.r;
-
-/**
- * @param  {error} error handler in callback
- * @param  {JSON} json - read rson object
- * @return {error} returns error when there is one
- */
-// d3.json("weights-large.json", function(error, json) {
-//     weights = json;
-//     // console.log(weights)
-//     d3.json("SIC.json", function(error, json) {
-//         if (error) return error;
-//         output = processedData(json, weights, false);
-//         setupSlider(output.MIN_YEAR, output.MAX_YEAR);
-//         data = output.data;
-//         annualHistory = output.coordHistory;
-//         updateChart(YEAR);
-//     });
-// });
 
 var chartOuterWidth = width + margin.left + margin.right;
 var svg = d3.select(".circle.chart")
@@ -58,25 +40,55 @@ $(".scatter.container").css("margin-top", margin.bottom);
 $(".map").css("width", ($(window).width() - chartOuterWidth - margin.right) + "px");
 $(".map").css("height", $(window).height() - margin.bottom * 2);
 
-
 /**
  * [createAxis] creates x y axis and labels
  * @return {null}
  */
 var xAxis, yAxis;
 (function createAxis() {
+    Y_DICT = {
+        "1.1": "Procure",
+        "1.2": "Transport",
+        "1.3": "Store",
+        "2.1": "Design",
+        "2.2": "Produce",
+        "2.3": "Test",
+        "3.1": "Sell",
+        "3.2": "Exchange",
+        "3.3": "Store",
+        "4.1": "Plan",
+        "4.2": "Direct",
+        "4.3": "Audit"
+    }
+
+    X_DICT = {
+        "A": "Real Estate",
+        "B": "Equipment",
+        "C": "Information",
+        "D": "Capital",
+        "E": "Energy",
+        "F": "Labor",
+        "G": "Diversified"
+    }
     xAxis = d3.svg.axis()
         .scale(x)
         .orient("top")
         .innerTickSize(-height)
         .outerTickSize(0)
-        .tickPadding(10);
+        .tickPadding(10)
+        .tickFormat(function(d) {
+            return d + " " + X_DICT[d]
+        })
+
     yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
         .innerTickSize(-width)
         .outerTickSize(0)
-        .tickPadding(10);
+        .tickPadding(10)
+        .tickFormat(function(d) {
+            return Y_DICT[d] + " " + d
+        });;
 
     svg.append("g")
         .attr("class", "x axis")
@@ -84,10 +96,17 @@ var xAxis, yAxis;
         .call(xAxis)
         .append("text")
         .attr("class", "label")
-        .attr("y", -10)
-        .attr("transform", "rotate(-90) translate(0,40)")
-        .style("text-anchor", "beginning")
+        .attr("y", -20)
         .text("Resource");
+
+    svg.select(".x.axis")
+        .selectAll("text")
+        .attr("x", 10).attr("y", 10)
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "start");
+
+
+
 
     svg.append("g").attr("class", "y axis").call(yAxis)
         .append("text")
@@ -141,7 +160,7 @@ function updateChart() {
     if (title.empty()) {
         svg.append("text")
             .attr("x", (width / 2))
-            .attr("y", 0 - (margin.top / 2))
+            .attr("y", - 2*margin.top/3)
             .attr("class", "chartTitle")
             .attr("text-anchor", "middle")
             .style("font-size", "20px")
