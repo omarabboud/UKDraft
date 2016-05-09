@@ -207,7 +207,6 @@ function updateChart() {
         return categories;
     })();
 
-    console.log(CENTER_ENG_DICT);
     d3.selectAll(".dot").each(function(d) {
         $(this).popup({
             content: d.firms + " firms at " + LOCI_TO_ENGLISH[d.center] + ", or " + CENTER_ENG_DICT[d.center].join(", "),
