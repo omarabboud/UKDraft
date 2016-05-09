@@ -105,9 +105,6 @@ var xAxis, yAxis;
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "start");
 
-
-
-
     svg.append("g").attr("class", "y axis").call(yAxis)
         .append("text")
         .attr("class", "label")
@@ -160,7 +157,7 @@ function updateChart() {
     if (title.empty()) {
         svg.append("text")
             .attr("x", (width / 2))
-            .attr("y", - 2*margin.top/3)
+            .attr("y", -2 * margin.top / 3)
             .attr("class", "chartTitle")
             .attr("text-anchor", "middle")
             .style("font-size", "20px")
@@ -183,12 +180,7 @@ function updateChart() {
         }).attr("fill", function(d, i) {
             return color(i);
         })
-
-    // if (allHighlighted) {
     circles.attr("fill-opacity", 0.8);
-    // } else {
-    // circles.attr("fill-opacity", 0);
-    // }
 
     circles.transition()
         .attr("r", function(d) {
@@ -202,15 +194,29 @@ function updateChart() {
         })
         .attr("y", 0)
 
+    var CENTER_ENG_DICT = (function getTechCategory() {
+        var categories = {}
+        for (var i = 0; i < chartData.length; i++) {
+            var center = chartData[i].center;
+            if (center in categories) {
+                categories[center].push(chartData[i].tech);
+            } else {
+                categories[center] = [chartData[i].tech];
+            }
+        }
+        return categories;
+    })();
+
+    console.log(CENTER_ENG_DICT);
     d3.selectAll(".dot").each(function(d) {
         $(this).popup({
-            content: d.firms + " firms at " + LOCI_TO_ENGLISH[d.center],
+            content: d.firms + " firms at " + LOCI_TO_ENGLISH[d.center] + ", or " + CENTER_ENG_DICT[d.center].join(", "),
             variation: "inverted tiny",
             position: "top left",
-            // inline: "true",
             hoverable: "true"
         });
     })
+
 }
 
 /**
