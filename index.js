@@ -18,14 +18,10 @@ SIC_DICT = {
 $(function() {
     var data, weights, YEAR = 2010; // initial slider year
     var margin = { top: 80, right: 20, bottom: 20, left: 80 };
-    // var width = $(window).width() * 0.30;
 
     // calculate height to keep grid items square
-    // var height = width * 12 / 7;
-    // var maxHeight = $(window).height() * 0.80;
+    
     var width = $(window).width() * 0.3;
-
-    // var width = Math.min(maxHeight * 7 / 12, maxWidth);
     var height = width * 12 / 7;
 
     // console.log(width, height)
@@ -392,62 +388,62 @@ $(function() {
      * interacts with the circle chart
      */
     function setUpLabels() {
-        for (key in SIC_DICT) {
-            $(".buttoncontainer").append(makeButtonHTML(key));
+        // for (key in SIC_DICT) {
+        //     $(".buttoncontainer").append(makeButtonHTML(key));
 
-            function makeButtonHTML(key) {
-                var color = SIC_DICT[key].color[1];
-                var HTML = '<div class="item"><button class="ui horizontal small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</div>'
-                return HTML
-            }
+        //     function makeButtonHTML(key) {
+        //         var color = SIC_DICT[key].color[1];
+        //         var HTML = '<div class="item"><button class="ui horizontal small circular basic ' + color + ' label" data-key="' + key + '"></button> ' + makeToolTip(key) + '</div>'
+        //         return HTML
+        //     }
 
-            function makeToolTip(key) {
-                var HTML = key + ': ' + SIC_DICT[key].name
-                return HTML;
-            }
-        };
+        //     function makeToolTip(key) {
+        //         var HTML = key + ': ' + SIC_DICT[key].name
+        //         return HTML;
+        //     }
+        // };
 
-        $(".circular.label").on("mouseenter", function() {
-            var active = !$(this).hasClass("selected");
-            if (active) transitionCircle($(this), 1);
-        }).on("mouseleave", function() {
-            var active = !$(this).hasClass("selected");
-            if (active) transitionCircle($(this), 0);
-            d3.selectAll(".cell").transition().style("fill-opacity", 1)
-        }).on("click", function() {
-            var checkbox = $('.ui.checkbox.sic');
-            if (checkbox.hasClass("checked")) {
-                $('.ui.checkbox.sic').checkbox("uncheck")
-                $(".circular.label").each(function() {
-                    transitionCircle($(this), 1);
-                })
-            }
-            $(this).toggleClass("selected");
-            transitionCircle($(this), 1);
-        });
+        // $(".circular.label").on("mouseenter", function() {
+        //     var active = !$(this).hasClass("selected");
+        //     if (active) transitionCircle($(this), 1);
+        // }).on("mouseleave", function() {
+        //     var active = !$(this).hasClass("selected");
+        //     if (active) transitionCircle($(this), 0);
+        //     d3.selectAll(".cell").transition().style("fill-opacity", 1)
+        // }).on("click", function() {
+        //     var checkbox = $('.ui.checkbox.sic');
+        //     if (checkbox.hasClass("checked")) {
+        //         $('.ui.checkbox.sic').checkbox("uncheck")
+        //         $(".circular.label").each(function() {
+        //             transitionCircle($(this), 1);
+        //         })
+        //     }
+        //     $(this).toggleClass("selected");
+        //     transitionCircle($(this), 1);
+        // });
 
-        $('.ui.checkbox.sic').checkbox({
-            onChecked: function() {
-                $(".circular.label").each(function() {
-                    $(this).addClass("selected");
-                    allHighlighted = true;
-                    transitionCircle($(this), 1, true);
-                })
-            },
-            onUnchecked: function() {
-                $(this).removeClass("selected");
-                $(".circular.label").each(function() {
-                    allHighlighted = false;
-                    transitionCircle($(this), 0, true);
-                })
-            }
-        })
+        // $('.ui.checkbox.sic').checkbox({
+        //     onChecked: function() {
+        //         $(".circular.label").each(function() {
+        //             $(this).addClass("selected");
+        //             allHighlighted = true;
+        //             transitionCircle($(this), 1, true);
+        //         })
+        //     },
+        //     onUnchecked: function() {
+        //         $(this).removeClass("selected");
+        //         $(".circular.label").each(function() {
+        //             allHighlighted = false;
+        //             transitionCircle($(this), 0, true);
+        //         })
+        //     }
+        // })
 
-        function handleLabelClick(elm) {
-            if (elm.hasClass("selected")) {
-                transitionCircle(elm, 1);
-            }
-        }
+        // function handleLabelClick(elm) {
+        //     if (elm.hasClass("selected")) {
+        //         transitionCircle(elm, 1);
+        //     }
+        // }
         /**
          * @param  {DOM object} label clicked
          * @param  {int} 0 or 1, represents desired opacity of circle fill
