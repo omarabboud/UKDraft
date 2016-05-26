@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import $ from 'jquery';
 import jQuery from 'jquery'
+import d3 from 'd3'
+
 // import 'semantic-ui-checkbox/checkbox.js';
 
 $.fn.checkbox = require('semantic-ui-checkbox')
@@ -30,13 +32,7 @@ export default class Menu extends React.Component {
     };
 
     handleHighlightClick() {
-        console.log("hi")
         this.setState({ selectAll: !this.state.selectAll })
-            // if (this.state.selectAll) {
-            //     $(".ui.checkbox.sic").checkbox("check");
-            // } else {
-            //     $(".ui.checkbox.sic").checkbox("uncheck");
-            // }
     }
 
     toggleSelected(entry) {
@@ -157,12 +153,35 @@ class ButtonLabel extends React.Component {
         this.props.toggleSelected(this.props.sic);
     }
 
+    transitionCircle(op) {
+        const sic = parseInt(this.props.sic);
+
+        d3.selectAll(".dot").filter(function(d) {
+            return (d.SIC.includes(sic))
+        }).each(function(d) {
+            const center = $(this).data("center");
+            var newCenter = center.charAt(0) + center.slice(-1);
+            d3.selectAll(".cell").transition().style("fill-opacity", 0.2);
+            var cells = d3.selectAll(".cell").filter(function(d) {
+                return (d.center == newCenter)
+            })
+            cells.transition().style("fill-opacity", 1)
+            var mode = (op == 1) ? "show" : "hide";
+            toggleMinMidMax(mode, newCenter);
+
+            /**
+             * select scatterplots at that SIC code and highlight those
+             */
+
+        }).transition().style("fill-opacity", op)
+    }
+
     render() {
         const key = this.props.sic;
         const color = SIC_DICT[key].color[1];
         return (
             <div key={key} className="item">
-                <button className={"ui horizontal small circular "+ this.getStyle() + color + " label"} data-key={key} onClick={() => this.handleClick()}></button> {this.makeToolTip(key)}
+                <button className={"ui horizontal small circular "+ this.getStyle() + color + " label"} data-key={key} onMouseOver={() => this.transitionCircle(1)} onClick={() => this.handleClick()}></button> {this.makeToolTip(key)}
             </div>
         )
 

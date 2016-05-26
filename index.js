@@ -404,8 +404,8 @@ $(function() {
         // };
 
         // $(".circular.label").on("mouseenter", function() {
-        //     var active = !$(this).hasClass("selected");
-        //     if (active) transitionCircle($(this), 1);
+        //     // var active = !$(this).hasClass("selected");
+        //     transitionCircle($(this), 1);
         // }).on("mouseleave", function() {
         //     var active = !$(this).hasClass("selected");
         //     if (active) transitionCircle($(this), 0);
