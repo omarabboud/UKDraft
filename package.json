@@ -9,7 +9,8 @@
     "babelify": "^7.3.0",
     "jquery": "^2.2.4",
     "react": "^15.0.2",
-    "react-dom": "^15.0.2"
+    "react-dom": "^15.0.2",
+    "semantic-ui-checkbox": "^2.1.7"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",

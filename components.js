@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import $ from 'jquery';
+import jQuery from 'jquery'
+// import 'semantic-ui-checkbox/checkbox.js';
+
+$.fn.checkbox = require('semantic-ui-checkbox')
 
 const SIC_DICT = {
     "7": { "color": ["#db2828", "red"], "name": "agriculture, forestry, fishing" },
@@ -26,19 +30,22 @@ export default class Menu extends React.Component {
     };
 
     handleHighlightClick() {
+        console.log("hi")
         this.setState({ selectAll: !this.state.selectAll })
             // if (this.state.selectAll) {
-            //   $(".ui.checkbox.sic").checkbox("check");
+            //     $(".ui.checkbox.sic").checkbox("check");
             // } else {
-            //   $(".ui.checkbox.sic").checkbox("uncheck");
+            //     $(".ui.checkbox.sic").checkbox("uncheck");
             // }
     }
 
     toggleSelected(entry) {
         var newState;
-        if (this.state.selected.has(entry)) {
+        if (this.state.selected.has(entry) || this.state.selectAll) {
             this.state.selected.delete(entry);
-            this.setState({ selectAll: false })
+            this.setState({ selectAll: false });
+            $(".checkbox.sic").checkbox("uncheck");
+
         } else {
             this.state.selected.add(entry);
         }
@@ -59,7 +66,19 @@ class Toggles extends React.Component {
     }
 
     isChecked() {
-        return (this.props.data.selectAll) ? "checked" : ""
+        return (this.props.data.selectAll) ? "highlightAll" : ""
+    }
+
+    componentDidMount() {
+        let handleHighlightClick = this.props.handleHighlightClick;
+        $(".checkbox.sic").checkbox({
+            onChecked: function() {
+                return handleHighlightClick()
+            },
+            onUnchecked: function() {
+                return handleHighlightClick()
+            }
+        });
     }
 
     render() {
@@ -72,9 +91,9 @@ class Toggles extends React.Component {
                             <input type="checkbox" name="public" />
                         </div>
                         <div className="ui hidden divider"></div>
-                        <div className={"ui toggle checkbox sic " + this.isChecked()}>
+                        <div  className={"ui toggle checkbox sic " + this.isChecked()}>
                             <label>Highlight all</label>
-                            <input onClick={this.props.handleHighlightClick} type="checkbox" name="public" />
+                            <input type="checkbox" name="public" />
                         </div>
 
                         <div className="ui hidden divider"></div>
@@ -123,7 +142,6 @@ class ButtonLabel extends React.Component {
     }
 
     isSelected() {
-        console.log(this.props.data.selected);
         return this.props.data.selected.has(this.props.sic)
     }
 
